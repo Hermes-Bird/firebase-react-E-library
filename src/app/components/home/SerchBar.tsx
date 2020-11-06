@@ -5,7 +5,7 @@ import {FormControl, Icon, InputAdornment, InputLabel, OutlinedInput, TextField}
 
 const SearchBar: React.FC<{}> = () => {
     return (
-        <div style={{marginTop: '40px'}}>
+        <div>
             <FormControl fullWidth>
                 <TextField
                     variant="outlined"

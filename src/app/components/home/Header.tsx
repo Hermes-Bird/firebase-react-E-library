@@ -9,15 +9,10 @@ const HeaderButton: React.FC<{icon?:string}> = (props) => {
     )
 }
 
-const highLightColor = {
-    color: '#00FFD7',
-    marginBottom: '6px'
-}
-
 const Header: React.FC = () => {
     return (
         <div>
-            <AppBar position="static" color="primary">
+            <AppBar position="fixed" color="primary">
                 <Toolbar>
                         <Icon fontSize="large" className="header-icon">local_library</Icon>
                         <Typography variant="h6" color="inherit" style={{marginRight: 'auto'}} noWrap>
