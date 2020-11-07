@@ -1,15 +1,10 @@
 import React from 'react'
 import {AppBar, Icon, Toolbar, Typography} from '@material-ui/core'
-import Button from '@material-ui/core/Button'
+import HeaderButton from '../utils/HeaderButton'
 
-const HeaderButton: React.FC<{icon?:string}> = (props) => {
-    let icon = props.icon || ''
-    return (
-        <Button startIcon={<Icon>{icon}</Icon>} style={{color: 'white', marginLeft: '10px'}}>{props.children}</Button>
-    )
-}
+import '../../styles/header.css'
 
-const Header: React.FC = () => {
+const HomeHeader: React.FC = () => {
     return (
         <div>
             <AppBar position="fixed" color="primary">
@@ -27,4 +22,4 @@ const Header: React.FC = () => {
     )
 }
 
-export default Header
+export default HomeHeader

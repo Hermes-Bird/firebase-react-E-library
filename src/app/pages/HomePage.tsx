@@ -1,9 +1,10 @@
 import React from 'react'
-import Header from '../components/home/Header'
+import HomeHeader from '../components/home/Header'
 import SearchBar from '../components/home/SerchBar'
-import {Grid, Container} from '@material-ui/core'
+import {Grid} from '@material-ui/core'
 import '../styles/homePage.css'
 import Book, { IBookProps } from '../components/home/Book'
+import ContentContainer from '../components/home/ContentContainer'
 
 
 const algeron = 'https://img1.od-cdn.com/ImageType-400/1694-1/E57/F99/64/{E57F9964-4362-4702-8A1D-B816679AA6FB}Img400.jpg'
@@ -90,13 +91,13 @@ const renderBooks = (books: IBookProps[]) => {
 const HomePage: React.FC = () => {
     return (
         <main className="home__main">
-            <Header/>
-            <Container className="home__container"> 
+            <HomeHeader/>
+            <ContentContainer> 
                 <SearchBar/>
                 <Grid className="home__books-grid" item container spacing={3} wrap="wrap">
                     {renderBooks(books)}
                 </Grid>
-            </Container>
+            </ContentContainer>
         </main>
     )
 }

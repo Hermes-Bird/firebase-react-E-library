@@ -1,0 +1,89 @@
+.book__image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 240px !important;
+    height: 320px !important;
+}
+
+.book__image:hover {
+    animation: rotate .6s ease-out;
+}
+
+.book__title {
+    font-family: Georgia !important;
+    font-weight: bold !important;
+}
+
+.book__article {
+    margin-top: 50px;
+}
+
+.book__about-title {
+    font-weight: 500 !important;
+}
+
+.book__read-button {
+    margin-top: 25px !important;
+    margin-bottom: 20px !important;
+    width: 240px;
+}
+
+.book__menu {
+    margin-bottom: 30px !important;
+}
+
+.book__menu-item {
+    user-select: none;
+    cursor: pointer;
+    transition: all .2s ease-in !important;
+}
+
+.book__menu-item:hover {
+    color: #0bdfff;
+}
+
+.book__about-section {
+    padding: 0 20px !important;
+}
+
+
+
+@media screen and (min-width: 600px) {
+    .book__menu-item {
+        padding-left: 20px !important;
+        justify-content: start !important;
+        max-width: 200px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .book__menu-item p{
+        margin-left: 20px !important;
+    }
+
+    .book__menu {
+        flex-direction: column !important;
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(4deg);
+    }
+
+    50% {
+        transform: rotate(-4deg);
+    }
+
+    75% {
+        transform: rotate(4deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}

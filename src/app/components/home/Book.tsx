@@ -22,7 +22,6 @@ const Book: React.FC<IBookProps> = ({title, author, published, rating, imgUrl}) 
                                 height="120px"
                                 alt="complex"
                                 src={imgUrl}
-                                // src=""
                             />
                         </ButtonBase>
                     </Grid>

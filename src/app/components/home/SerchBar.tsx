@@ -1,7 +1,5 @@
 import React from 'react'
-import {FormControl, Icon, InputAdornment, InputLabel, OutlinedInput, TextField} from '@material-ui/core'
-
-
+import { FormControl, Icon, InputAdornment, TextField } from '@material-ui/core'
 
 const SearchBar: React.FC<{}> = () => {
     return (
@@ -11,7 +9,11 @@ const SearchBar: React.FC<{}> = () => {
                     variant="outlined"
                     label="Type name of your book"
                     InputProps={{
-                        startAdornment: <InputAdornment position="start"><Icon>search</Icon></InputAdornment>,
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <Icon>search</Icon>
+                            </InputAdornment>
+                        )
                     }}
                 />
             </FormControl>
