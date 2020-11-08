@@ -3,8 +3,8 @@ import { Grid, Icon, Paper, Typography } from '@material-ui/core'
 import BookListItem, { IBookListItemProps } from './BookListItem'
 
 const renderList = (bookItems: IBookListItemProps[]) => {
-    return bookItems.map(bookItem => (
-        <BookListItem imageUrl={bookItem.imageUrl} title={bookItem.title} />
+    return bookItems.map((bookItem, index) => (
+        <BookListItem imageUrl={bookItem.imageUrl} title={bookItem.title} key={index} />
     ))
 }
 

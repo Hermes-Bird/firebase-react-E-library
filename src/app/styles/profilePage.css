@@ -2,7 +2,7 @@
     padding: 20px;
 }
 
-.profile__avatar {
+.profile__image {
     width: 240px !important;
     height: 320px !important;
     background-size: cover;
@@ -12,7 +12,7 @@
 }
 
 
-.profile__avatar-upload {
+.profile__image-upload {
     position: absolute !important;
     bottom: 5px;
     right: 5px;
@@ -74,4 +74,3 @@
     font-size: 20px;
     border-radius: 5px !important;
 }
-

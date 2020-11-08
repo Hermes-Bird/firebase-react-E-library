@@ -1,19 +1,20 @@
 import { Fab, Icon, Paper, Typography } from '@material-ui/core'
 import React from 'react'
 
-export interface IProfilePictureProps {
+export interface IPictureContainerProps {
+    imageTitle?: string
     imageUrl: string
 }
 
 
-const ProfilePictureContainer:React.FC<IProfilePictureProps> = ({imageUrl}) => {
+const PictureContainer:React.FC<IPictureContainerProps> = ({imageUrl, imageTitle}) => {
     return (
         <>
             <Typography variant="h5" color="primary">
-                Profile picture
+                {imageTitle}
             </Typography>
             <Paper
-                className="profile__avatar"
+                className="profile__image"
                 style={{
                     backgroundImage: `url(${imageUrl})`
                 }}
@@ -22,7 +23,7 @@ const ProfilePictureContainer:React.FC<IProfilePictureProps> = ({imageUrl}) => {
                     color="secondary"
                     component="label"
                     size="small"
-                    className="profile__avatar-upload"
+                    className="profile__image-upload"
                 >
                     <Icon>cloud_upload</Icon>
                     <input
@@ -36,4 +37,4 @@ const ProfilePictureContainer:React.FC<IProfilePictureProps> = ({imageUrl}) => {
     )
 }
 
-export default ProfilePictureContainer
+export default PictureContainer

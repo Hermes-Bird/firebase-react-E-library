@@ -1,3 +1,7 @@
+.book__grid-container {
+    padding-top: 30px !important;
+}
+
 .book__image {
     background-position: center;
     background-repeat: no-repeat;
@@ -45,6 +49,10 @@
 
 .book__about-section {
     padding: 0 20px !important;
+}
+
+.admin__form-grid {
+    padding: 5px 10px;
 }
 
 

@@ -4,7 +4,11 @@ import HeaderButton from '../utils/HeaderButton'
 
 import '../../styles/header.css'
 
-const HomeHeader: React.FC = () => {
+interface IHomeHeaderProps {
+    edit?: boolean
+}
+
+const HomeHeader: React.FC<IHomeHeaderProps> = ({edit}) => {
     return (
         <div>
             <AppBar position="fixed" color="primary">
@@ -13,8 +17,12 @@ const HomeHeader: React.FC = () => {
                         <Typography variant="h6" color="inherit" style={{marginRight: 'auto'}} noWrap>
                             E-Library
                         </Typography>
+                    {
+                        edit ? (
+                            <HeaderButton icon="library_add">Add book</HeaderButton>
+                        ) : null
+                    }
                     <HeaderButton icon="account_box">Profile</HeaderButton>
-                    <HeaderButton icon="favorite_border">Favorite</HeaderButton>
                     <HeaderButton icon="exit_to_app">Logout</HeaderButton>
                 </Toolbar>
             </AppBar>

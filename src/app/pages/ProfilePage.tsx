@@ -1,10 +1,10 @@
 import { Grid } from '@material-ui/core'
 import React from 'react'
-import BookPageHeader from '../components/book/BookPageHeader'
+import PageHeader from '../components/utils/PageHeader'
 import { IBookListItemProps } from '../components/profile/BookListItem'
 import ProfileBookList from '../components/profile/ProfileBookList'
 import ProfileForm from '../components/profile/ProfileForm'
-import ProfilePictureContainer from '../components/profile/ProfilePictureContainer'
+import PictureContainer from '../components/utils/PictureContainer'
 
 import '../styles/profilePage.css'
 
@@ -40,10 +40,10 @@ const bookItems: IBookListItemProps[] = [
 const ProfilePage = () => {
     return (
         <div>
-            <BookPageHeader />
+            <PageHeader />
             <Grid container className="profile__grid-container">
                 <Grid item container alignContent="center" direction="column" xs={12} sm={4} className="profile__avatar-container">
-                    <ProfilePictureContainer imageUrl={userProfile.avatarUrl}/>
+                    <PictureContainer imageUrl={userProfile.avatarUrl}/>
                 </Grid>
                 <Grid item container xs={12} sm={7} justify="center" direction="column">
                     <ProfileForm/>

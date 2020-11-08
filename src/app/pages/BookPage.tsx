@@ -2,14 +2,14 @@ import { Grid } from '@material-ui/core'
 import React from 'react'
 import BookAboutSection from '../components/book/BookAboutSection'
 import BookActionSection from '../components/book/BookActionSection'
-import BookPageHeader from '../components/book/BookPageHeader'
+import PageHeader from '../components/utils/PageHeader'
 
 
 const BookPage = () => {
     return (
         <>
-            <BookPageHeader />
-            <Grid container style={{ paddingTop: '30px' }}>
+            <PageHeader />
+            <Grid container className="book__grid-container">
                 <Grid item container>
                     <BookActionSection/>
                     <BookAboutSection/>

@@ -6,6 +6,10 @@
 
 body {
     font-family: Roboto, sans-serif;
+    overflow-x: hidden;
+    /* NIGHT__MODE */
+    /* background: rgba(0, 0, 0, 0.3); */
 }
+
 
 

@@ -8,7 +8,7 @@ export interface IBookListItemProps {
 
 const BookListItem: React.FC<IBookListItemProps> = ({imageUrl, title}) => {
     return (
-        <Grid container alignItems="center" xs={12} lg={6} className="profile__book-item">
+        <Grid container item alignItems="center" xs={12} lg={6} className="profile__book-item">
             <Grid item container alignItems="center" xs={11}>
                 <Paper style={{backgroundImage: `url(${imageUrl})`}} className="profile__list-image"/>
                 <Typography variant="body2" className="profile__book-title">
