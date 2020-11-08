@@ -8,10 +8,10 @@ import ProfilePage from './pages/ProfilePage';
 const App: React.FC = (): JSX.Element => {
     return (
         <>
-            <AuthPage/>
+            {/* <AuthPage/> */}
             {/* <HomePage/> */}
             {/* <BookPage/> */}
-            {/* <ProfilePage/> */}
+            <ProfilePage/>
         </>
     );
 }
