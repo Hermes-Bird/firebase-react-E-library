@@ -11,11 +11,11 @@ interface IUserFormProps {
 export interface IFormValues {
     email: string
     password: string,
-    repeatedPassword?: string
+    userName?: string
 }
 
 const UserForm: React.FC<IUserFormProps> = ({onSubmit, isLoginForm}) => {
-    const initialValues: IFormValues = {email: '', password: ''}
+    const initialValues: IFormValues = {email: '', password: '', userName: isLoginForm ? undefined : ''}
     return (
             <Formik
                 initialValues={initialValues}
@@ -32,11 +32,24 @@ const UserForm: React.FC<IUserFormProps> = ({onSubmit, isLoginForm}) => {
                       handleSubmit
                   }) => (
                     <Form>
+                        {
+                            !isLoginForm ?
+                                <FormControl fullWidth>
+                                    <ValidatedTextField
+                                        variant="outlined"
+                                        label="User name"
+                                        type="text"
+                                        name="userName"
+                                        as={TextField}
+                                    />
+                                </FormControl>
+                                : null
+                        }
                         <FormControl fullWidth>
                             <ValidatedTextField
                                 variant="outlined"
                                 label="Email"
-                                type="email"
+                                type="text"
                                 name="email"
                                 as={TextField}
                                 error
@@ -51,19 +64,7 @@ const UserForm: React.FC<IUserFormProps> = ({onSubmit, isLoginForm}) => {
                                 as={TextField}
                             />
                         </FormControl>
-                        {
-                            isLoginForm ?
-                                <FormControl fullWidth>
-                                    <ValidatedTextField
-                                        variant="outlined"
-                                        label="Repeat password"
-                                        type="password"
-                                        name="repeatedPassword"
-                                        as={TextField}
-                                    />
-                                </FormControl>
-                                : null
-                        }
+                        
                         <FormControl fullWidth>
                             <Button variant="contained" color="primary" type="submit">Submit</Button>
                         </FormControl>

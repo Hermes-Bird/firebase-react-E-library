@@ -20,9 +20,9 @@ const AuthPage: React.FC = () => {
                         <Grid onClick={() => setIsLogin(!isLogin)} item>
                             <Link variant="body1" style={{cursor: 'pointer'}}>
                                 {
-                                    isLogin
-                                        ? 'Already have an account? Sign In'
-                                        : 'Don\'t have an account? Sign Up'
+                                    isLogin 
+                                        ? 'Don\'t have an account? Sign Up'
+                                        : 'Already have an account? Sign In'    
                                 }
                             </Link>
                         </Grid>

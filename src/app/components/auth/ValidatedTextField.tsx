@@ -6,7 +6,7 @@ import {IFormValues} from './UserForm'
 export interface IErrorValues {
     email: string
     password: string
-    repeatedPassword: string
+    userName: string
 }
 
 
@@ -19,11 +19,11 @@ export const ValidatedTextField: React.FC<FieldAttributes<{} | TextFieldProps>> 
 
 
 
-export const validate = ({email, password, repeatedPassword} : IFormValues): IErrorValues => {
+export const validate = ({email, password, userName} : IFormValues): IErrorValues => {
     const errors: IErrorValues= {
         email: '',
         password: '',
-        repeatedPassword: ''
+        userName: ''
     }
 
     if(!email) {
@@ -38,10 +38,10 @@ export const validate = ({email, password, repeatedPassword} : IFormValues): IEr
         errors.password = 'Password should be at least 6 characters'
     }
 
-    if(repeatedPassword !== undefined && !repeatedPassword) {
-        errors.repeatedPassword = 'Please repeat your password'
-    }else if (repeatedPassword !== undefined && password !== repeatedPassword) {
-        errors.repeatedPassword = 'Passwords are not equal'
+    if(typeof userName === 'string' && !userName) {
+        errors.userName = 'User name is required'
+    } else if (typeof userName === 'string' && userName.length < 3) {
+        errors.userName = 'User name should be at least 3 characters'
     }
 
     return errors

@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-    Avatar,
     Grid,
     Icon,
     IconButton,
