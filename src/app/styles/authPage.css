@@ -3,7 +3,7 @@
 }
 
 .auth-page__image {
-    background-image: url("https://get.wallhere.com/photo/building-interior-books-library-knowledge-shelves-interior-design-aisle-bookselling-public-library-72435.jpg");
+    background: url("../../static/images/auth-page.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

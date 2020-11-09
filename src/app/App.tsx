@@ -1,21 +1,38 @@
-import React from 'react';
+import { observer } from 'mobx-react'
+import React from 'react'
+import { Route } from 'react-router-dom'
+import { useUser } from './hooks/useUser'
 import AuthPage from './pages/AuthPage'
-import BookAdminPage from './pages/BookAdminPage';
-import BookPage from './pages/BookPage';
+import BookAdminPage from './pages/BookAdminPage'
+import BookPage from './pages/BookPage'
 import HomePage from './pages/HomePage'
-import ProfilePage from './pages/ProfilePage';
+import LoaderPage from './pages/LoaderPage'
+import ProfilePage from './pages/ProfilePage'
 
 
-const App: React.FC = (): JSX.Element => {
-    return (
+const App: React.FC = () => {
+    const user = useUser()
+
+    if (user === undefined) return <LoaderPage/>
+
+    return user ? (
         <>
-            {/* <AuthPage/> */}
-            <HomePage/>
-            {/* <BookPage/> */}
-            {/* <BookAdminPage/> */}
-            {/* <ProfilePage/> */}
+            <Route exact path="/">
+                <HomePage />
+            </Route>
+            <Route exact path="/book/:id">
+                <BookPage />
+            </Route>
+            <Route path="/book/admin/:id">
+                <BookAdminPage />
+            </Route>
+            <Route path="/profile">
+                <ProfilePage />
+            </Route>
         </>
-    );
+    ) : (
+        <AuthPage />
+    )
 }
 
-export default App;
+export default observer(App)

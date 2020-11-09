@@ -1,12 +1,12 @@
-import {FieldAttributes, useField} from 'formik'
 import React from 'react'
+import {FieldAttributes, useField} from 'formik'
 import {TextField, TextFieldProps} from '@material-ui/core'
-import {IFormValues} from './UserForm'
+import { IFormValues } from '../../models/User'
 
 export interface IErrorValues {
-    email: string
-    password: string
-    userName: string
+    email?: string
+    password?: string
+    userName?: string
 }
 
 
@@ -19,12 +19,8 @@ export const ValidatedTextField: React.FC<FieldAttributes<{} | TextFieldProps>> 
 
 
 
-export const validate = ({email, password, userName} : IFormValues): IErrorValues => {
-    const errors: IErrorValues= {
-        email: '',
-        password: '',
-        userName: ''
-    }
+export const validate = ({email, password, userName} : IFormValues): (IErrorValues | {}) => {
+    const errors: IErrorValues = {}
 
     if(!email) {
         errors.email = 'Email is required'

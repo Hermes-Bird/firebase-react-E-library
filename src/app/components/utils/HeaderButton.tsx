@@ -1,5 +1,6 @@
 import { Button, Icon } from '@material-ui/core'
 import React from 'react'
+import { useRootContext } from '../../stores/RootStore'
 
 interface IHeaderButtonProps {
     icon?: string
@@ -10,6 +11,7 @@ interface IHeaderButtonProps {
 const HeaderButton: React.FC<IHeaderButtonProps> = ({icon, endIcon, onClick, children}) => {
     icon = icon || ''
     onClick = onClick || (() => {})
+    
     if (endIcon)
         return (
             <Button

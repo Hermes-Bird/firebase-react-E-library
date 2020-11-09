@@ -3,12 +3,16 @@ import {AppBar, Icon, Toolbar, Typography} from '@material-ui/core'
 import HeaderButton from '../utils/HeaderButton'
 
 import '../../styles/header.css'
+import { Link } from 'react-router-dom'
+import { useRootContext } from '../../stores/RootStore'
 
 interface IHomeHeaderProps {
     edit?: boolean
 }
 
 const HomeHeader: React.FC<IHomeHeaderProps> = ({edit}) => {
+    const {userStore} = useRootContext()
+
     return (
         <div>
             <AppBar position="fixed" color="primary">
@@ -19,11 +23,15 @@ const HomeHeader: React.FC<IHomeHeaderProps> = ({edit}) => {
                         </Typography>
                     {
                         edit ? (
-                            <HeaderButton icon="library_add">Add book</HeaderButton>
+                            <Link to="/admin/book/1">
+                                <HeaderButton icon="library_add">Add book</HeaderButton>
+                            </Link>
                         ) : null
                     }
-                    <HeaderButton icon="account_box">Profile</HeaderButton>
-                    <HeaderButton icon="exit_to_app">Logout</HeaderButton>
+                    <Link to="/profile">
+                        <HeaderButton icon="account_box">Profile</HeaderButton>
+                    </Link>
+                    <HeaderButton onClick={userStore.signOut} icon="exit_to_app">Logout</HeaderButton>
                 </Toolbar>
             </AppBar>
         </div>

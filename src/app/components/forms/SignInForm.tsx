@@ -1,28 +1,20 @@
 import React from 'react'
-import {Form, Formik, FormikValues} from 'formik'
-import {validate, ValidatedTextField} from './ValidatedTextField'
+import {Form, Formik} from 'formik'
+import {validate, ValidatedTextField} from '../auth/ValidatedTextField'
 import {Button, FormControl, TextField} from '@material-ui/core'
+import { ISignInValues } from '../../models/User'
 
 interface IUserFormProps {
-    onSubmit: (data: FormikValues) => void
-    isLoginForm: boolean
+    onSubmit: (data: ISignInValues) => Promise<void>
 }
 
-export interface IFormValues {
-    email: string
-    password: string,
-    userName?: string
-}
 
-const UserForm: React.FC<IUserFormProps> = ({onSubmit, isLoginForm}) => {
-    const initialValues: IFormValues = {email: '', password: '', userName: isLoginForm ? undefined : ''}
+const SignInForm: React.FC<IUserFormProps> = ({onSubmit}) => {
+    const initialValues: ISignInValues = {email: '', password: '',}
     return (
             <Formik
                 initialValues={initialValues}
-                onSubmit={(data: FormikValues) => {
-                    console.log(data)
-                    onSubmit(data)
-                }}
+                onSubmit={(data: ISignInValues) => onSubmit(data)}
                 validate={validate}
             >
                 {({
@@ -32,19 +24,6 @@ const UserForm: React.FC<IUserFormProps> = ({onSubmit, isLoginForm}) => {
                       handleSubmit
                   }) => (
                     <Form>
-                        {
-                            !isLoginForm ?
-                                <FormControl fullWidth>
-                                    <ValidatedTextField
-                                        variant="outlined"
-                                        label="User name"
-                                        type="text"
-                                        name="userName"
-                                        as={TextField}
-                                    />
-                                </FormControl>
-                                : null
-                        }
                         <FormControl fullWidth>
                             <ValidatedTextField
                                 variant="outlined"
@@ -75,4 +54,4 @@ const UserForm: React.FC<IUserFormProps> = ({onSubmit, isLoginForm}) => {
     )
 }
 
-export default UserForm
+export default SignInForm
