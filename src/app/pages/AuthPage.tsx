@@ -3,7 +3,6 @@ import SignInForm from '../components/forms/SignInForm'
 import {Avatar, CssBaseline, Grid, Link, Paper, Typography} from '@material-ui/core'
 import { useRootContext } from '../stores/RootStore'
 import SignUpForm from '../components/forms/SignUpForm'
-import libraryImage from '../../images/auth-page.jpeg'
 import '../styles/authPage.css'
 
 const AuthPage: React.FC = () => {

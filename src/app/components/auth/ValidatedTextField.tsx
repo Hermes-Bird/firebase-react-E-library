@@ -17,14 +17,21 @@ export const ValidatedTextField: React.FC<FieldAttributes<{} | TextFieldProps>> 
     return <TextField {...field} {...props} style={styles} error={!!errorText} helperText={errorText}/>
 }
 
+interface IErrorMessage {
+    message: string
+}
 
 
-export const validate = ({email, password, userName} : IFormValues): (IErrorValues | {}) => {
+
+export const validate = ({email, password, userName} : IFormValues, serverError : IErrorMessage): (IErrorValues | {}) => {
     const errors: IErrorValues = {}
-
-    if(!email) {
+    console.log('Server error', serverError)
+    if(serverError.message){
+        errors.email = serverError.message
+        serverError.message = ''
+    } else if(!email) {
         errors.email = 'Email is required'
-    }else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
+    } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
         errors.email = 'Invalid email'
     }
 
@@ -40,5 +47,6 @@ export const validate = ({email, password, userName} : IFormValues): (IErrorValu
         errors.userName = 'User name should be at least 3 characters'
     }
 
+    console.log(errors)
     return errors
 }

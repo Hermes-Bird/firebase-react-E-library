@@ -8,6 +8,11 @@ interface ISignUpFormProps {
     onSubmit: (data: ISignUpValues) => Promise<void>
 }
 
+
+const error = {
+    message: ''
+}
+
 const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
     const initialValues = {
         email: '',
@@ -18,10 +23,20 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
     return (
         <Formik
             initialValues={initialValues}
-            onSubmit={(data: ISignUpValues) =>  {
+            onSubmit={(data: ISignUpValues, {
+                setFieldError,
+                setSubmitting
+            }) =>  {
+                setSubmitting(true)
                 onSubmit(data)
+                    .then()
+                    .catch(err => {
+                        setFieldError('email','Email is already used by another acount')
+                        error.message = 'Email is already used by another acount'
+                    })
+                    .finally(() => setSubmitting(false))
             }}
-            validate={validate}
+            validate={(values) => validate(values, error)}
         >
             {({ values, handleChange, handleBlur, handleSubmit }) => (
                 <Form>

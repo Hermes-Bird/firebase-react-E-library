@@ -2,7 +2,6 @@ import firebase from 'firebase'
 import { userConverter } from '../models/converters'
 import { ISignInValues, ISignUpValues, IUser } from '../models/User'
 
-
 window.firebase = firebase as any
 
 const STANDART__AVATAR_URL: string =
@@ -34,48 +33,38 @@ class FirebaseAgent {
         password,
         userName
     }: ISignUpValues): Promise<IUser | null> {
-        try {
-            const { user } = await this.auth.createUserWithEmailAndPassword(
+        const { user } = await this.auth.createUserWithEmailAndPassword(
+            email,
+            password
+        )
+
+        if (user) {
+            const userData: IUser = {
                 email,
-                password
-            )
-
-            if (user) {
-                const userData: IUser = {
-                    email,
-                    userName,
-                    id: user.uid,
-                    isAdmin: false,
-                    imageUrl: STANDART__AVATAR_URL
-                }
-
-                this.db
-                    .collection('users')
-                    .withConverter(userConverter)
-                    .doc(user.uid)
-                    .set(userData)
-
-                return userData
+                userName,
+                id: user.uid,
+                isAdmin: false,
+                imageUrl: STANDART__AVATAR_URL
             }
 
-            return null
-        } catch (err) {
-            console.log(err.message)
-            return null
+            this.db
+                .collection('users')
+                .withConverter(userConverter)
+                .doc(user.uid)
+                .set(userData)
+
+            return userData
         }
+
+        return null
     }
 
     async signInWithEmail({
         email,
         password
     }: ISignInValues): Promise<IUser | null> {
-        try {
-            await this.auth.signInWithEmailAndPassword(email, password)
-            return await this.getCurrentUser()
-        } catch (err) {
-            console.log(err.message)
-            return null
-        }
+        await this.auth.signInWithEmailAndPassword(email, password)
+        return await this.getCurrentUser()
     }
 
     async getCurrentUser(): Promise<IUser | null> {
@@ -96,11 +85,7 @@ class FirebaseAgent {
     }
 
     async userSignOut(): Promise<any> {
-        try {
-            firebase.auth().signOut()
-        } catch (err) {
-            console.log(err.message)
-        }
+        firebase.auth().signOut()
     }
 }
 
