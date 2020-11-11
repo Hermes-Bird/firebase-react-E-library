@@ -1,19 +1,30 @@
-import React from 'react'
-import { Grid, Icon, Paper, Typography } from '@material-ui/core'
-import BookListItem, { IBookListItemProps } from './BookListItem'
+import React, {useEffect} from 'react'
+import {Grid, Icon, Paper, Typography} from '@material-ui/core'
+import BookListItem from './BookListItem'
+import {IBook} from '../../models/Book'
+import {CollectionNames} from '../../models/User'
+import {useRootContext} from '../../stores/RootStore'
+import {observer} from 'mobx-react'
 
-const renderList = (bookItems: IBookListItemProps[]) => {
-    return bookItems.map((bookItem, index) => (
-        <BookListItem imageUrl={bookItem.imageUrl} title={bookItem.title} key={index} />
-    ))
+
+const renderList = (bookItems: IBook[], collectionName: CollectionNames) => {
+    return bookItems.map((bookItem, index) => {
+        return (
+            <BookListItem key={bookItem.id} imageUrl={bookItem.imageUrl} title={bookItem.title} collectionName={collectionName} id={bookItem.id}/>
+        )
+    })
 }
 
 interface IBookListProps {
     listName: string
-    bookItems: IBookListItemProps[]
+    bookItems: IBook[]
+    collectionName: CollectionNames
 }
 
-const ProfileBookList: React.FC<IBookListProps> = ({ listName, bookItems }) => {
+const ProfileBookList: React.FC<IBookListProps> = ({ listName, collectionName, bookItems}) => {
+    const {user} = useRootContext().userStore
+    const collection = user ? user[collectionName] : []
+
     return (
         <>
             <Typography
@@ -23,9 +34,9 @@ const ProfileBookList: React.FC<IBookListProps> = ({ listName, bookItems }) => {
             >
                 {listName}
             </Typography>
-            {bookItems.length > 0 ? (
+            {collection.length > 0 ? (
                 <Paper variant="outlined" className="profile__list-container">
-                    <Grid container>{renderList(bookItems)}</Grid>
+                    <Grid className="profile__list" container>{renderList(bookItems, collectionName)}</Grid>
                 </Paper>
             ) : (
                 <Grid
@@ -44,4 +55,4 @@ const ProfileBookList: React.FC<IBookListProps> = ({ listName, bookItems }) => {
     )
 }
 
-export default ProfileBookList
+export default observer(ProfileBookList)

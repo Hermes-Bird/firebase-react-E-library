@@ -3,11 +3,12 @@ import {Redirect, Route, Switch} from 'react-router-dom'
 import {observer} from 'mobx-react'
 import {useUser} from './hooks/useUser'
 import AuthPage from './pages/AuthPage'
-import BookAdminPage, {bookPageType} from './pages/BookAdminPage'
+import BookAddPage from './pages/BookAddPage'
 import BookPage from './pages/BookPage'
 import HomePage from './pages/HomePage'
 import LoaderPage from './pages/LoaderPage'
 import ProfilePage from './pages/ProfilePage'
+import BookEditPage from './pages/BookEditPage'
 
 const App: React.FC = () => {
     const user = useUser()
@@ -17,21 +18,11 @@ const App: React.FC = () => {
     return user ? (
         <>
             <Switch>
-                <Route exact path="/">
-                    <HomePage />
-                </Route>
-                <Route exact path="/book/:id">
-                    <BookPage />
-                </Route>
-                <Route exact path="/admin/book/add">
-                    <BookAdminPage type={bookPageType.add}/>
-                </Route>
-                <Route path="/admin/book/edit/:id">
-                    <BookAdminPage type={bookPageType.edit}/>
-                </Route>
-                <Route path="/profile">
-                    <ProfilePage />
-                </Route>
+                <Route exact path="/" component={HomePage}/>
+                <Route exact path="/book/:id" component={BookPage}/>
+                <Route exact path="/admin/book/add" component={BookAddPage} />
+                <Route path="/admin/book/edit/:id" component={BookEditPage}/>
+                <Route path="/profile" component={ProfilePage}/>
                 <Redirect to="/"/>
             </Switch>
         </>

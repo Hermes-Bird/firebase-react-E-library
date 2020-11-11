@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Button} from '@material-ui/core'
 
-const UploadPdfButton: React.FC<{ pdfRef: React.RefObject<HTMLLabelElement> }> = ({pdfRef}) => {
+const UploadPdfButton: React.FC<{ pdfRef: React.RefObject<HTMLInputElement> }> = ({pdfRef}) => {
 
     return (
         <Button
@@ -10,8 +10,8 @@ const UploadPdfButton: React.FC<{ pdfRef: React.RefObject<HTMLLabelElement> }> =
             variant="contained"
             color="secondary"
             id="book-form-pdf"
-            ref={pdfRef}
         >
+            <input ref={pdfRef} type="file" accept="application/pdf" name="pdfFile" style={{display: 'none'}}/>
             upload book pdf
         </Button>
     )

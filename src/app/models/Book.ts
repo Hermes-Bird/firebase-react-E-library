@@ -7,9 +7,13 @@ export enum Rating {
     fiveHearts = 5
 }
 
+export type Ratings = {[key: string]: Rating}
+
 export interface IBook {
+    id: string
     imageUrl: string
     rating: Rating
+    ratings: Ratings
     title: string
     description: string
     author: string

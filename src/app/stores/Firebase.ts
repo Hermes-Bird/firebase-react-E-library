@@ -1,13 +1,12 @@
 import firebase from 'firebase'
-import {userConverter} from '../models/converters'
-import {IProfileFormValues, ISignInValues, ISignUpValues, IUser} from '../models/User'
+import {bookConverter, userConverter} from '../models/converters'
+import {CollectionNames, IProfileFormValues, ISignInValues, ISignUpValues, IUser} from '../models/User'
 import {IBookFormValues} from '../validation/bookValidation'
 import {IBook, Rating} from '../models/Book'
-
-window.firebase = firebase as any
+import {calculateRating} from '../helpers/helper'
 
 const STANDART__AVATAR_URL: string =
-    'https://sun9-64.userapi.com/awS1t-56Yt1T98VXOi-blwmmtCm4JLj1sh9zfA/Xjcz51hjws0.jpg'
+    'https://ru.myanimeshelf.com/upload/dynamic/2016-05/28/Amashiro-Natsuki-Anime-Original-Anime-Art-Anime-23671211.png'
 
 const config = {
     apiKey: 'AIzaSyBFwBCOWeCpKbmJ0pBYvm5cHLa6PNtJbMA',
@@ -52,8 +51,7 @@ class FirebaseAgent {
                 isAdmin: false,
                 imageUrl: STANDART__AVATAR_URL,
                 favorite: [],
-                markedAsRead: [],
-                ratedBooks: []
+                markedAsRead: []
             }
 
             await this.db
@@ -140,8 +138,10 @@ class FirebaseAgent {
     async createBook(bookFormValues: IBookFormValues, image: File | string, pdf: File) {
         const imageIsFile = typeof image !== 'string'
         const newBook: IBook = {
+            id: '',
             imageUrl: !imageIsFile ? image as string : '',
             rating: Rating.notRated,
+            ratings: {},
             title: bookFormValues.title,
             description: bookFormValues.description,
             author: bookFormValues.author,
@@ -150,27 +150,131 @@ class FirebaseAgent {
             comments: []
         }
 
-        console.log(pdf)
-
         const newBookRef = await this.db.collection('books').add(newBook)
+        const {id} = newBookRef
 
-        const pdfRef = await this.pdfStorage.child(`${newBookRef.id}.pdf`)
-        const imgRef = await this.bookImageStorage.child(`${newBookRef.id}.jpg`)
+        const pdfRef = await this.pdfStorage.child(`${id}.pdf`)
 
-        await pdfRef.put(pdf, {
-            contentType: 'application/pdf'
-        })
+        await pdfRef.put(pdf, {contentType: 'application/pdf'})
         const pdfUrl = await pdfRef.getDownloadURL()
 
         let imageUrl
         if (imageIsFile) {
+            const imgRef = await this.bookImageStorage.child(`${id}.jpg`)
             await imgRef.put(image as File)
             imageUrl = await imgRef.getDownloadURL()
         } else imageUrl = image
 
-        await newBookRef.update({imageUrl, pdfUrl})
+        await newBookRef.update({imageUrl, pdfUrl, id})
     }
 
+    async fetchBooks(): Promise<IBook[]> {
+        const booksArray: IBook[] = []
+        const booksSnapshot = await this.db
+                .collection('books')
+                .withConverter(bookConverter)
+                .get()
+
+        booksSnapshot.forEach(bookSnap => booksArray.push(bookSnap.data()))
+
+        return booksArray
+    }
+
+    async fetchBookById(id: string): Promise<IBook | null> {
+        const bookSnapshot = await this.db
+            .collection('books')
+            .withConverter(bookConverter)
+            .doc(id)
+            .get()
+
+        return bookSnapshot.data() || null
+    }
+
+    async addBookRate(rate: Rating, bookId: string) {
+        const bookRef = this.db
+            .collection('books')
+            .withConverter(bookConverter)
+            .doc(bookId)
+
+        const userId = this.auth.currentUser?.uid
+
+        const bookState = (await bookRef.get()).data()
+        if(bookState && userId && rate !== Rating.notRated) {
+            bookState.ratings[userId] = rate
+            bookState.rating = calculateRating(bookState.ratings)
+
+            await bookRef.set({...bookState})
+            return bookState
+        }
+    }
+
+    async addToBookToUserCollection(bookId: string, collectionName: CollectionNames) {
+        const userId = this.auth.currentUser?.uid
+        const user = await this.getCurrentUser()
+
+        if (userId && user) {
+            user[collectionName].push(bookId)
+            await this.db
+                .collection('users')
+                .withConverter(userConverter)
+                .doc(userId)
+                .set(user)
+            return user
+        }
+    }
+
+    async removeBookFromCollection(bookId: string, collectionName: CollectionNames) {
+        const userId = this.auth.currentUser?.uid
+        const user = await this.getCurrentUser()
+
+        if (userId && user) {
+            user[collectionName] = user[collectionName].filter((book) => book !== bookId)
+            await this.db
+                .collection('users')
+                .withConverter(userConverter)
+                .doc(userId)
+                .set(user)
+            console.log(user)
+            return user
+        }
+    }
+
+    async updateBook(id: string, bookFormValues: IBookFormValues, image: File | string, pdf: File | null) {
+        const bookRef = this.db
+            .collection('books')
+            .withConverter(bookConverter)
+            .doc(id)
+
+        let pdfUrl = !pdf ? bookFormValues.pdfFile : ''
+
+        if (!pdfUrl && pdf) {
+            const pdfRef = await this
+                            .pdfStorage
+                            .child(`${id}.pdf`)
+            await pdfRef.put(pdf, {contentType: 'application/pdf'})
+            pdfUrl = await pdfRef.getDownloadURL()
+        }
+
+        let imageUrl = typeof image === 'string' ? image : ''
+        if (!imageUrl) {
+            const imgRef = await this.bookImageStorage.child(`${id}.jpg`)
+            await imgRef.put(image as File)
+            imageUrl = await imgRef.getDownloadURL()
+        }
+
+        await bookRef.update({
+            ...bookFormValues,
+            imageUrl,
+            pdfUrl
+        })
+    }
+
+    async deleteBookById(id: string) {
+        await this.db
+                .collection('books')
+                .doc(id)
+                .delete()
+    }
 }
 
 export const firebaseAgent = new FirebaseAgent()

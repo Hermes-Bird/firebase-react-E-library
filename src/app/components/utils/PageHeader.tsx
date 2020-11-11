@@ -1,5 +1,5 @@
-import { AppBar, Icon, Toolbar, Typography } from '@material-ui/core'
 import React from 'react'
+import { AppBar, Icon, Toolbar, Typography } from '@material-ui/core'
 import HeaderButton from './HeaderButton'
 import '../../styles/header.css'
 import { Link } from 'react-router-dom'
@@ -27,11 +27,13 @@ const PageHeader: React.FC<IHeaderProps> = ({ edit, editHandler, buttonText='Edi
                 >
                     <span className="highlight-header">E</span>-Library
                 </Typography>
-                {edit ? (
+                {
+                    edit ? (
                     <HeaderButton icon={icon} onClick={clickHandler}>
                         {buttonText}
                     </HeaderButton>
-                ) : null}
+                    ) : null
+                }
             </Toolbar>
         </AppBar>
     )

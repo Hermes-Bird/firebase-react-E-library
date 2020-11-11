@@ -1,29 +1,28 @@
-import { Button, ButtonBase, Grid, Icon, Paper, Typography} from '@material-ui/core'
 import React from 'react'
+import { Button, ButtonBase, Grid, Icon, Paper, Typography} from '@material-ui/core'
 import HeartRating from '../utils/HeartReating';
+import {Rating} from '../../models/Book'
+import {Link} from 'react-router-dom'
 
 export interface IBookProps {
-    imgUrl: string
+    imageUrl: string
     title: string
     author: string
-    published: number
-    rating: number
+    publicationYear: string
+    rating: Rating
+    id: string
 }
 
-const Book: React.FC<IBookProps> = ({title, author, published, rating, imgUrl}) => {
+const Book: React.FC<IBookProps> = ({title, author, publicationYear, rating, imageUrl, id}) => {
     return (
         <>
             <Paper className="book-item">
                 <Grid container spacing={3}>
                     <Grid item>
-                        <ButtonBase>
-                            <img
-                                width="90px"
-                                height="120px"
-                                alt="complex"
-                                src={imgUrl}
+                            <Paper
+                                className="home__book-cover"
+                                style={{backgroundImage: `url(${imageUrl})`}}
                             />
-                        </ButtonBase>
                     </Grid>
                     <Grid item xs container alignItems="center" justify="space-around">
                         <Grid item xs container direction="column" spacing={2}>
@@ -35,7 +34,7 @@ const Book: React.FC<IBookProps> = ({title, author, published, rating, imgUrl}) 
                                     variant="body2"
                                     color="textSecondary"
                                 >
-                                    {author} ({published})
+                                    {author} ({publicationYear})
                                 </Typography>
                             </Grid>
                             <Grid item>
@@ -45,9 +44,11 @@ const Book: React.FC<IBookProps> = ({title, author, published, rating, imgUrl}) 
                             </Grid>
                         </Grid>
                         <Grid item>
-                            <Button variant="contained" color="primary" size="large">
-                                <Icon>read_more</Icon>
-                            </Button>
+                            <Link to={`book/${id}`}>
+                                <Button variant="contained" color="primary" size="large">
+                                    <Icon>read_more</Icon>
+                                </Button>
+                            </Link>
                         </Grid>
                     </Grid>
                 </Grid>

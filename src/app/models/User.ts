@@ -8,7 +8,6 @@ export interface IUser {
     isAdmin: boolean
     favorite: string[]
     markedAsRead: string[]
-    ratedBooks: RatedBooks[]
 }
 
 export interface RatedBooks {
@@ -34,4 +33,9 @@ export interface IAuthFormValues extends ISignInValues {
 export interface IProfileFormValues {
     userName: string
     email: string
+}
+
+export enum CollectionNames {
+    markedAsRead = 'markedAsRead',
+    favorite = 'favorite'
 }

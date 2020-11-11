@@ -1,14 +1,15 @@
-import { Fab } from '@material-ui/core'
 import React from 'react'
+import { Fab } from '@material-ui/core'
 import RootPortal from '../portals/RootPortal'
 
 interface ISaveButtonProps {
     handleSubmit: () => void
     isSubmitting: boolean
     changes: boolean
+    buttonText?: string
 }
 
-const SaveChangesButton: React.FC<ISaveButtonProps> = ({handleSubmit, isSubmitting, changes}) => {
+const SaveChangesButton: React.FC<ISaveButtonProps> = ({handleSubmit, isSubmitting, changes, buttonText}) => {
     return (
         <RootPortal>
             <Fab
@@ -20,7 +21,7 @@ const SaveChangesButton: React.FC<ISaveButtonProps> = ({handleSubmit, isSubmitti
                 style={{display: changes ? 'inline' : 'none'}}
                 disabled={isSubmitting}
             >
-                save changes
+                {buttonText || 'save changes' }
             </Fab>
         </RootPortal>
     )

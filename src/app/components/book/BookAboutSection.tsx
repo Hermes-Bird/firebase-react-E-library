@@ -1,24 +1,29 @@
-import { Grid, Typography } from '@material-ui/core'
+import {Grid, Typography} from '@material-ui/core'
 import React from 'react'
 import BookCommentarySection from './BookCommentarySection'
+import {IBook} from '../../models/Book'
 
-const BookAboutSection: React.FC = () => {
+interface IBookAboutSectionProps {
+    book: IBook | null
+}
+
+const BookAboutSection: React.FC<IBookAboutSectionProps> = ({book}) => {
     return (
-        <Grid item xs={12} sm container direction="column" className="book__about-section">
+        <Grid item xs={12} sm={6} container direction="column" className="book__about-section">
             <Grid item>
                 <Typography
                     className="book__title"
                     variant="h3"
                     color="textPrimary"
                 >
-                    Flowers for Algeron
+                    {book?.title || ''}
                 </Typography>
                 <Typography
                     variant="body1"
                     color="textSecondary"
-                    style={{ paddingLeft: '4px' }}
+                    style={{paddingLeft: '4px'}}
                 >
-                    Daniel Keyes (first published 1966)
+                    {`${book?.author || ''} (first published ${book?.publicationYear || ''})`}
                 </Typography>
             </Grid>
             <Grid className="book__article">
@@ -26,47 +31,10 @@ const BookAboutSection: React.FC = () => {
                     About this book:
                 </Typography>
                 <Typography variant="body1">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, nihil saepe. Modi, rem? Necessitatibus sed nihil nam
-                    architecto, facilis debitis et at eius ut esse consectetur
-                    tempora expedita voluptatibus. Dicta, facere natus ex
-                    repellat explicabo atque vel et, quis obcaecati distinctio
-                    enim corrupti veniam placeat maxime
+                    {book?.description || ''}
                 </Typography>
-                <Typography variant="body1">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, nihil saepe. Modi, rem? Necessitatibus sed nihil nam
-                    architecto, facilis debitis et at eius ut esse consectetur
-                    tempora expedita voluptatibus. Dicta, facere natus ex
-                    repellat explicabo atque vel et, quis obcaecati distinctio
-                    enim corrupti veniam placeat maxime
-                </Typography>
-                <Typography variant="body1">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, nihil saepe. Modi, rem? Necessitatibus sed nihil nam
-                    architecto, facilis debitis et at eius ut esse consectetur
-                    tempora expedita voluptatibus. Dicta, facere natus ex
-                    repellat explicabo atque vel et, quis obcaecati distinctio
-                    enim corrupti veniam placeat maxime
-                </Typography>
-                <Typography variant="body1">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, nihil saepe. Modi, rem? Necessitatibus sed nihil nam
-                    architecto, facilis debitis et at eius ut esse consectetur
-                    tempora expedita voluptatibus. Dicta, facere natus ex
-                    repellat explicabo atque vel et, quis obcaecati distinctio
-                    enim corrupti veniam placeat maxime
-                </Typography>
-                <Typography variant="body1">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Iusto, nihil saepe. Modi, rem? Necessitatibus sed nihil nam
-                    architecto, facilis debitis et at eius ut esse consectetur
-                    tempora expedita voluptatibus. Dicta, facere natus ex
-                    repellat explicabo atque vel et, quis obcaecati distinctio
-                    enim corrupti veniam placeat maxime
-                </Typography>
+                {/*<BookCommentarySection/>*/}
             </Grid>
-            <BookCommentarySection/>
         </Grid>
     )
 }

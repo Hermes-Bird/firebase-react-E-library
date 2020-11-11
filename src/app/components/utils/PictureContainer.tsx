@@ -4,7 +4,7 @@ import React, {ChangeEvent, useState} from 'react'
 export interface IPictureContainerProps {
     imageTitle?: string
     imageUrl: string
-    onUpload: (file: File) => Promise<void>
+    onUpload: (file: File) => Promise<void|string>
 }
 
 const PictureContainer: React.FC<IPictureContainerProps> = ({imageUrl, imageTitle, onUpload}) => {

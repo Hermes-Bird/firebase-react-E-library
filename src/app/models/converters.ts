@@ -19,8 +19,7 @@ export const userConverter: firebase.firestore.FirestoreDataConverter<IUser> = {
             imageUrl: data.imageUrl,
             isAdmin: data.isAdmin,
             favorite: data.favorite,
-            markedAsRead: data.markedAsRead,
-            ratedBooks: data.ratedBooks
+            markedAsRead: data.markedAsRead
         }
     }
 }
@@ -49,8 +48,10 @@ export const bookConverter: firebase.firestore.FirestoreDataConverter<IBook> = {
     fromFirestore(snapshot: firebase.firestore.QueryDocumentSnapshot, options: firebase.firestore.SnapshotOptions): IBook {
         const data = snapshot.data(options)
         return {
+            id: data.id,
             imageUrl: data.imageUrl,
             rating: data.rating,
+            ratings: data.ratings,
             title: data.title,
             description: data.description,
             author: data.author,

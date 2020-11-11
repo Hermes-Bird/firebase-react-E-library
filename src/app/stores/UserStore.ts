@@ -1,5 +1,5 @@
 import { action, makeObservable, observable } from 'mobx'
-import {IProfileFormValues, ISignInValues, ISignUpValues, IUser} from '../models/User'
+import {CollectionNames, IProfileFormValues, ISignInValues, ISignUpValues, IUser} from '../models/User'
 import { firebaseAgent } from './Firebase'
 
 export class UserStore {
@@ -39,6 +39,18 @@ export class UserStore {
     @action uploadUserImage = async (image: File) => {
         if (this.user) {
             this.user.imageUrl = await firebaseAgent.uploadUserImage(image) || this.user.imageUrl
+        }
+    }
+
+    @action addBookToCollection = async (bookId: string | null, collectionName: CollectionNames) => {
+        if (bookId && this.user && !this.user[collectionName].includes(bookId)) {
+            this.user = await firebaseAgent.addToBookToUserCollection(bookId, collectionName) || null
+        }
+    }
+
+    @action removeBookFromCollection = async (bookId: string, collectionName: CollectionNames) => {
+        if (this.user && this.user[collectionName].includes(bookId)) {
+            this.user = await firebaseAgent.removeBookFromCollection(bookId, collectionName) || null
         }
     }
 }

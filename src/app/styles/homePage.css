@@ -28,6 +28,7 @@ main.home__main {
     margin-top: 20px !important;
     height: 85%;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .home__books-grid::-webkit-scrollbar {

@@ -2,6 +2,10 @@ import firebase from 'firebase'
 import { useEffect, useState } from 'react'
 import {useRootContext} from '../stores/RootStore'
 
+// very important hook
+// dangerous to change
+// changes can break Rating system
+
 export const useUser = () => {
     const [user, setUser]: [any, any] = useState(undefined)
     const {userStore} = useRootContext()
