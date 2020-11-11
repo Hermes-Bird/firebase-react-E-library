@@ -1,0 +1,80 @@
+.profile__grid-container {
+    padding: 20px;
+}
+
+.profile__image {
+    width: 240px !important;
+    height: 320px !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    position: relative;
+}
+
+
+.profile__image-upload {
+    position: absolute !important;
+    bottom: 5px;
+    right: 5px;
+}
+
+.profile__save-changes {
+    /* display: none !important; */
+    position: sticky !important;
+    bottom: 10px;
+    left: calc(100% - 150px);
+}
+
+.profile__book-avatar {
+    height: 120px !important;
+    width: 80px !important;
+}
+
+.profile__list-image {
+    height: 120px;
+    width: 80px;
+    background-position: center;
+    background-size: cover;
+    margin-right: 8px;
+    
+}
+
+
+.profile__book-item {
+    transition: all .2s ease-out;
+    padding: 20px !important;
+}
+
+.profile__list-container {
+    margin-bottom: 20px;
+}
+
+.profile__book-item:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.profile__book-title {
+    cursor: pointer !important;
+    font-weight: bold !important;
+}
+
+.profile__avatar-container {
+    margin-right: 40px !important;
+    margin-bottom: 20px !important;
+}
+
+.profile__list-title {
+    font-weight: 500 !important;
+}
+
+.profile__empty-list {
+    background-color: rgba(0, 0, 0, 0.05);
+    height: 200px;
+    color: rgb(97, 97, 97);
+    font-size: 20px;
+    border-radius: 5px !important;
+}
+
+.profile__list {
+    height: 100%;
+}

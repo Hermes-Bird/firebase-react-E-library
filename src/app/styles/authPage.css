@@ -1,0 +1,22 @@
+.auth-page__main {
+    height: 100vh;
+}
+
+.auth-page__image {
+    background: url("../../static/images/auth-page.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.auth-form {
+    padding: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth-paper {
+    display: flex;
+    align-items: center;
+}

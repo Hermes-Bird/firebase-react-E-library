@@ -1,0 +1,17 @@
+.header-icon {
+    color: #00FFD7 !important;
+    margin-right: 5px;
+    margin-bottom: 7px;
+}
+
+.highlight-header {
+    color: #00FFD7
+}
+
+.header__icon {
+    transition: all .2s ease-in;
+}
+
+.header__icon:active, .header__icon:hover  {
+    color: #00FFD7 !important;    
+}
