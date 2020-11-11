@@ -7,15 +7,17 @@ import { Link } from 'react-router-dom'
 interface IHeaderProps {
     edit?: boolean
     editHandler?: () => void
+    buttonText?: string
+    icon?:string
 }
 
-const PageHeader: React.FC<IHeaderProps> = ({ edit, editHandler }) => {
+const PageHeader: React.FC<IHeaderProps> = ({ edit, editHandler, buttonText='Edit', icon= 'edit'}) => {
     const clickHandler = editHandler || (() => {})
     return (
         <AppBar position="static" color="primary">
             <Toolbar>
                 <Link to="/">
-                    <Icon color="default" className="header__icon">arrow_back_ios</Icon>
+                    <Icon className="header__icon">arrow_back_ios</Icon>
                 </Link>
                 <Typography
                     variant="h6"
@@ -26,8 +28,8 @@ const PageHeader: React.FC<IHeaderProps> = ({ edit, editHandler }) => {
                     <span className="highlight-header">E</span>-Library
                 </Typography>
                 {edit ? (
-                    <HeaderButton icon="edit" onClick={clickHandler}>
-                        Edit
+                    <HeaderButton icon={icon} onClick={clickHandler}>
+                        {buttonText}
                     </HeaderButton>
                 ) : null}
             </Toolbar>

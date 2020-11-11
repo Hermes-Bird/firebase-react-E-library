@@ -6,7 +6,7 @@ import App from './app/App'
 import './app/styles/index.css'
 
 
-const history = createBrowserHistory()
+export const history = createBrowserHistory()
 
 ReactDOM.render(
     <Router history={history}>

@@ -1,13 +1,23 @@
-import { Fab, Icon, Paper, Typography } from '@material-ui/core'
-import React from 'react'
+import {Fab, Icon, Paper, Typography} from '@material-ui/core'
+import React, {ChangeEvent, useState} from 'react'
 
 export interface IPictureContainerProps {
     imageTitle?: string
     imageUrl: string
+    onUpload: (file: File) => Promise<void>
 }
 
+const PictureContainer: React.FC<IPictureContainerProps> = ({imageUrl, imageTitle, onUpload}) => {
+    const [uploading, setUploading] = useState(false)
+    const handleInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        setUploading(true)
+        if (e.target && e.target.files && onUpload) {
+            const file = e.target.files[0]
+            await onUpload(file)
+        }
+        setUploading(false)
+    }
 
-const PictureContainer:React.FC<IPictureContainerProps> = ({imageUrl, imageTitle}) => {
     return (
         <>
             <Typography variant="h5" color="primary">
@@ -24,12 +34,16 @@ const PictureContainer:React.FC<IPictureContainerProps> = ({imageUrl, imageTitle
                     component="label"
                     size="small"
                     className="profile__image-upload"
+                    disabled={uploading}
+                    id="form-image-upload"
                 >
                     <Icon>cloud_upload</Icon>
                     <input
+                        disabled={uploading}
                         type="file"
                         accept="image/*"
-                        style={{ display: 'none' }}
+                        style={{display: 'none'}}
+                        onChange={(e) => handleInputChange(e)}
                     />
                 </Fab>
             </Paper>

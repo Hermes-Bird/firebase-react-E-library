@@ -1,16 +1,13 @@
 import React from 'react'
 import { Form, Formik } from 'formik'
-import { validate, ValidatedTextField } from '../auth/ValidatedTextField'
+import { ValidatedTextField } from '../auth/ValidatedTextField'
 import { Button, FormControl, TextField } from '@material-ui/core'
 import { ISignInValues } from '../../models/User'
+import {authValidate} from '../../validation/authValidation'
 
 interface IUserFormProps {
-    onSubmit: (data: ISignInValues) => Promise<void | null>
+    onSubmit: (data: ISignInValues) => Promise<void>
 }
-
-const error = {
-    message: ''
-} 
 
 const SignInForm: React.FC<IUserFormProps> = ({ onSubmit }) => {
     const initialValues: ISignInValues = { email: '', password: '' }
@@ -19,18 +16,22 @@ const SignInForm: React.FC<IUserFormProps> = ({ onSubmit }) => {
             initialValues={initialValues}
             onSubmit={(
                 data: ISignInValues,
-                { setSubmitting, setFieldError}
+                {
+                    setSubmitting,
+                    setFieldError,
+                    setErrors
+                }
             ) => {
                 setSubmitting(true)
                 onSubmit(data)
                     .then()
                     .catch(err => {
                         setFieldError('email', 'Incorrect email or password')
-                        error.message = 'Incorrect email or password'
+                        setErrors({email: 'Incorrect email or password'})
                     })
                     .finally(() => setSubmitting(false))
             }}
-            validate={(values) => validate(values, error)}
+            validate={(values) => authValidate(values)}
         >
             {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
                 <Form>

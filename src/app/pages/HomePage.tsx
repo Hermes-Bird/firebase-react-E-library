@@ -5,6 +5,8 @@ import { Grid } from '@material-ui/core'
 import '../styles/homePage.css'
 import Book, { IBookProps } from '../components/home/Book'
 import ContentContainer from '../components/home/ContentContainer'
+import {useRootContext} from '../stores/RootStore'
+import {observer} from 'mobx-react'
 
 const algeron =
     'https://img1.od-cdn.com/ImageType-400/1694-1/E57/F99/64/{E57F9964-4362-4702-8A1D-B816679AA6FB}Img400.jpg'
@@ -90,9 +92,10 @@ const renderBooks = (books: IBookProps[]) => {
 }
 
 const HomePage: React.FC = () => {
+    const {userStore} = useRootContext()
     return (
         <main className="home__main">
-            <HomeHeader edit={false} />
+            <HomeHeader edit={userStore.user?.isAdmin} />
             <ContentContainer>
                 <SearchBar />
                 <Grid
@@ -109,4 +112,4 @@ const HomePage: React.FC = () => {
     )
 }
 
-export default HomePage
+export default observer(HomePage)

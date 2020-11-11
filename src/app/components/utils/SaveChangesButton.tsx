@@ -1,6 +1,6 @@
 import { Fab } from '@material-ui/core'
 import React from 'react'
-import RootPortal from './RootPortal'
+import RootPortal from '../portals/RootPortal'
 
 interface ISaveButtonProps {
     handleSubmit: () => void

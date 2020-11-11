@@ -23,7 +23,7 @@ const HomeHeader: React.FC<IHomeHeaderProps> = ({edit}) => {
                         </Typography>
                     {
                         edit ? (
-                            <Link to="/admin/book/1">
+                            <Link to="/admin/book/add">
                                 <HeaderButton icon="library_add">Add book</HeaderButton>
                             </Link>
                         ) : null

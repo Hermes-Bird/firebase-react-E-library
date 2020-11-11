@@ -55,6 +55,10 @@
     padding: 5px 10px;
 }
 
+.admin__upload--button {
+    width: 240px !important;
+    margin-top: 20px !important;
+}
 
 
 @media screen and (min-width: 600px) {

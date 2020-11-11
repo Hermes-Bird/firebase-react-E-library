@@ -1,13 +1,21 @@
-import { Grid, List, Typography } from '@material-ui/core'
+import {Grid, List, Typography} from '@material-ui/core'
 import React from 'react'
 import PageHeader from '../components/utils/PageHeader'
 import PictureContainer from '../components/utils/PictureContainer'
 
 import '../styles/profilePage.css'
 import '../styles/bookPage.css'
-import AdminEditForm from '../components/admin/AdminEditForm'
+import AdminEditForm from '../components/forms/AdminEditForm'
 import { renderComments } from '../components/book/BookCommentarySection'
+import UploadPdfButton from '../components/utils/UploadPdfButton'
+import {useRootContext} from '../stores/RootStore'
+import {observer} from 'mobx-react'
 
+
+export enum bookPageType {
+    add,
+    edit
+}
 // const comments = [
 //     {
 //         avatarUrl:
@@ -17,38 +25,25 @@ import { renderComments } from '../components/book/BookCommentarySection'
 //         commentText:
 //             'Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze '
 //     },
-
-//     {
-//         avatarUrl:
-//             'https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/CheHigh.jpg/1200px-CheHigh.jpg',
-//         userName: 'Che Guevarra',
-//         edit: true,
-//         commentText:
-//             'Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze '
-//     },
-
-//     {
-//         avatarUrl:
-//             'https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/CheHigh.jpg/1200px-CheHigh.jpg',
-//         userName: 'Che Guevarra',
-//         edit: true,
-//         commentText:
-//             'Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze Yare Yare Daze '
-//     }
 // ]
 
 const comments: [] = []
 
-const TEST_URL =
-    'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b925e785-3e47-42c3-8110-f2743254296d/daib59s-fc93fa6e-1b1f-4f46-acae-384046c56002.png/v1/fill/w_750,h_1000,q_80,strp/loli_jotaro_by_krokobyaka_daib59s-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3siaGVpZ2h0IjoiPD0xMDAwIiwicGF0aCI6IlwvZlwvYjkyNWU3ODUtM2U0Ny00MmMzLTgxMTAtZjI3NDMyNTQyOTZkXC9kYWliNTlzLWZjOTNmYTZlLTFiMWYtNGY0Ni1hY2FlLTM4NDA0NmM1NjAwMi5wbmciLCJ3aWR0aCI6Ijw9NzUwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.-sQ2msE-sV5oOwbp6gR3zr4VLMmqWLQd30wYBNNekqY'
+interface IBookAdminPageProps {
+    type: bookPageType
+}
 
-const BookAdminPage = () => {
+const BookAdminPage = ({type}: IBookAdminPageProps) => {
+    const pdfRef = React.createRef<HTMLLabelElement>()
+    const {tempImageUrl, uploadTempBookImage, createNewBook} = useRootContext().bookStore
+
     return (
         <>
-            <PageHeader />
+            <PageHeader buttonText={type === bookPageType.edit ? 'delete' : 'edit'} edit={type === bookPageType.edit} icon="delete"/>
             <Grid className="book__grid-container" container>
-                <Grid container item md={4} justify="center" sm={12}>
-                    <PictureContainer imageUrl={TEST_URL} />
+                <Grid container item md={4} justify="flex-start" sm={12} direction="column" alignItems="center">
+                    <PictureContainer imageUrl={tempImageUrl} imageTitle="Book cover" onUpload={uploadTempBookImage}/>
+                    <UploadPdfButton pdfRef={pdfRef}/>
                 </Grid>
                 <Grid
                     item
@@ -58,7 +53,7 @@ const BookAdminPage = () => {
                     justify="center"
                     alignItems="center"
                 >
-                    <AdminEditForm />
+                    <AdminEditForm pdfRef={pdfRef} bookInfo={null} onSubmit={createNewBook}/>
                     {comments.length > 0 ? (
                         <>
                             <Typography>Book Comments:</Typography>
@@ -71,4 +66,4 @@ const BookAdminPage = () => {
     )
 }
 
-export default BookAdminPage
+export default observer(BookAdminPage)

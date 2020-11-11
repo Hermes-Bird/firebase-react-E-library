@@ -1,16 +1,12 @@
 import React from 'react'
 import { Form, Formik } from 'formik'
-import { validate, ValidatedTextField } from '../auth/ValidatedTextField'
+import { ValidatedTextField } from '../auth/ValidatedTextField'
 import { Button, FormControl, TextField } from '@material-ui/core'
 import { ISignUpValues } from '../../models/User'
+import {authValidate} from '../../validation/authValidation'
 
 interface ISignUpFormProps {
     onSubmit: (data: ISignUpValues) => Promise<void>
-}
-
-
-const error = {
-    message: ''
 }
 
 const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
@@ -25,20 +21,21 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
             initialValues={initialValues}
             onSubmit={(data: ISignUpValues, {
                 setFieldError,
-                setSubmitting
+                setSubmitting,
+                setErrors
             }) =>  {
                 setSubmitting(true)
                 onSubmit(data)
                     .then()
                     .catch(err => {
-                        setFieldError('email','Email is already used by another acount')
-                        error.message = 'Email is already used by another acount'
+                        setFieldError('email','Email is already used by another account')
+                        setErrors({email: 'Email is already used by another account'})
                     })
                     .finally(() => setSubmitting(false))
             }}
-            validate={(values) => validate(values, error)}
+            validate={(values) => authValidate(values)}
         >
-            {({ values, handleChange, handleBlur, handleSubmit }) => (
+            {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
                 <Form>
                     <FormControl fullWidth>
                         <ValidatedTextField
@@ -74,6 +71,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
                             variant="contained"
                             color="primary"
                             type="submit"
+                            disabled={isSubmitting}
                         >
                             Submit
                         </Button>

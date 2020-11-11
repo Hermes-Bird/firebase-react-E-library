@@ -1,9 +1,18 @@
+import {Rating} from './Book'
+
 export interface IUser {
     id: string
     email: string
     userName: string
     imageUrl: string
     isAdmin: boolean
+    favorite: string[]
+    markedAsRead: string[]
+    ratedBooks: RatedBooks[]
+}
+
+export interface RatedBooks {
+    [id: string] : Rating
 }
 
 export interface ISignInValues {
@@ -18,6 +27,11 @@ export interface ISignUpValues {
 }
 
 
-export interface IFormValues extends ISignInValues {
+export interface IAuthFormValues extends ISignInValues {
     userName?: string
+}
+
+export interface IProfileFormValues {
+    userName: string
+    email: string
 }
