@@ -274,6 +274,14 @@ class FirebaseAgent {
                 .collection('books')
                 .doc(id)
                 .delete()
+
+        await this.pdfStorage
+            .child(`${id}.pdf`)
+            .delete()
+
+        await this.bookImageStorage
+            .child(`${id}.jpg`)
+            .delete()
     }
 }
 

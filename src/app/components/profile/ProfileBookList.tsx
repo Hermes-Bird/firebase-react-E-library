@@ -36,7 +36,9 @@ const ProfileBookList: React.FC<IBookListProps> = ({ listName, collectionName, b
             </Typography>
             {collection.length > 0 ? (
                 <Paper variant="outlined" className="profile__list-container">
-                    <Grid className="profile__list" container>{renderList(bookItems, collectionName)}</Grid>
+                    <Grid className="profile__list" container>
+                        {renderList(bookItems, collectionName)}
+                    </Grid>
                 </Paper>
             ) : (
                 <Grid
