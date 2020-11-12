@@ -21,7 +21,7 @@ const BookListItem: React.FC<IBookListItemProps> = ({imageUrl, title, collection
     }
     return (
         <Grid container item alignItems="center" xs={12} lg={6} className="profile__book-item">
-            <Grid item container alignItems="center" xs={11}>
+            <Grid item container alignItems="center" xs={11} wrap="nowrap">
                 <Paper style={{backgroundImage: `url(${imageUrl})`}} className="profile__list-image"/>
                 <Typography variant="body2" className="profile__book-title">
                     {title}

@@ -54,8 +54,8 @@
 }
 
 .profile__book-title {
-    cursor: pointer !important;
     font-weight: bold !important;
+    text-overflow: ellipsis !important;
 }
 
 .profile__avatar-container {
@@ -76,5 +76,5 @@
 }
 
 .profile__list {
-    height: 100%;
+    height: 100% !important;
 }
