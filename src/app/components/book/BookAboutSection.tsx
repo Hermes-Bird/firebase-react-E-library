@@ -1,6 +1,5 @@
 import {Grid, Typography} from '@material-ui/core'
 import React from 'react'
-import BookCommentarySection from './BookCommentarySection'
 import {IBook} from '../../models/Book'
 
 interface IBookAboutSectionProps {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {CircularProgress, Grid, Icon, Typography} from '@material-ui/core'
 import {CollectionNames} from '../../models/User'
 import {useRootContext} from '../../stores/RootStore'

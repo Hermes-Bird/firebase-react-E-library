@@ -20,7 +20,7 @@ const ProfilePage = () => {
             getBooksFromCollection(user.favorite, CollectionNames.favorite)
             getBooksFromCollection(user.markedAsRead, CollectionNames.markedAsRead)
         }
-    }, [user])
+    }, [user, getBooksFromCollection])
 
     return (
         <div>

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {Grid, Icon, Paper, Typography} from '@material-ui/core'
 import BookListItem from './BookListItem'
 import {IBook} from '../../models/Book'

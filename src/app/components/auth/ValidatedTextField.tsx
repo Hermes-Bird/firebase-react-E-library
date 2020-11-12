@@ -1,7 +1,6 @@
 import React from 'react'
 import {FieldAttributes, useField} from 'formik'
 import {TextField, TextFieldProps} from '@material-ui/core'
-import { IAuthFormValues } from '../../models/User'
 
 
 export const ValidatedTextField: React.FC<FieldAttributes<{} | TextFieldProps>> = (props:any) => {
