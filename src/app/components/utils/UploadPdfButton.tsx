@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Button} from '@material-ui/core'
 
 const UploadPdfButton: React.FC<{ pdfRef: React.RefObject<HTMLInputElement> }> = ({pdfRef}) => {

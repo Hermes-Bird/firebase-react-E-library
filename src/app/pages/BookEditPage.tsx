@@ -18,7 +18,7 @@ interface IMatchProps {
 
 const BookEditPage: React.FC<RouteComponentProps<IMatchProps>> = ({match}) => {
     const pdfRef = React.createRef<HTMLInputElement>()
-    const {uploadTempBookImage, tempImageUrl} = useRootContext().bookStore
+    const {uploadTempBookImage} = useRootContext().bookStore
     const {currentBook, fetchBookById, deleteBookById, updateBookById} = useRootContext().bookStore
 
     const [imageUrl, setImageUrl] = useState('')

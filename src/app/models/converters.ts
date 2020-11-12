@@ -1,7 +1,7 @@
 import firebase from 'firebase'
 import { IUser } from './User'
 import {IComment} from './Comment'
-import {IBook, Rating} from './Book'
+import {IBook} from './Book'
 
 export const userConverter: firebase.firestore.FirestoreDataConverter<IUser> = {
     toFirestore(user: IUser): firebase.firestore.DocumentData {
@@ -26,7 +26,7 @@ export const userConverter: firebase.firestore.FirestoreDataConverter<IUser> = {
 
 export const commentConverter: firebase.firestore.FirestoreDataConverter<IComment> = {
     toFirestore(modelObject: IComment): firebase.firestore.DocumentData {
-        return {... modelObject}
+        return {...modelObject}
     },
 
     fromFirestore(snapshot: firebase.firestore.QueryDocumentSnapshot, options: firebase.firestore.SnapshotOptions): IComment {

@@ -1,6 +1,5 @@
-import { Button, Icon } from '@material-ui/core'
 import React from 'react'
-import { useRootContext } from '../../stores/RootStore'
+import { Button, Icon } from '@material-ui/core'
 
 interface IHeaderButtonProps {
     icon?: string

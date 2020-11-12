@@ -12,7 +12,6 @@ import {CollectionNames} from '../../models/User'
 
 const BookActionSection: React.FC<{book: IBook | null}> = ({book}) => {
     const {setCurrentBookRating} = useRootContext().bookStore
-    const {addBookToCollection} = useRootContext().userStore
 
     const {user} = useRootContext().userStore
     const bookRating = book?.ratings[user?.id || ''] || Rating.notRated
@@ -30,7 +29,7 @@ const BookActionSection: React.FC<{book: IBook | null}> = ({book}) => {
                 </Typography>
                 <HeartRating bookPage handleChange={setCurrentBookRating} rating={bookRating}/>
             </Grid>
-            <a href={book?.pdfUrl} target="_blank">
+            <a href={book?.pdfUrl} rel="noreferrer" target="_blank">
                 <Button className="book__read-button" color="primary" variant="contained">Read</Button>
             </a>
             <Grid className="book__menu" container item justify="center" alignContent="center">
