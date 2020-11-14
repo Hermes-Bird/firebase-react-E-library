@@ -9,14 +9,14 @@ const STANDART__AVATAR_URL: string =
     'https://ru.myanimeshelf.com/upload/dynamic/2016-05/28/Amashiro-Natsuki-Anime-Original-Anime-Art-Anime-23671211.png'
 
 const config = {
-    apiKey: 'AIzaSyBFwBCOWeCpKbmJ0pBYvm5cHLa6PNtJbMA',
-    authDomain: 'el-library.firebaseapp.com',
-    databaseURL: 'https://el-library.firebaseio.com',
-    projectId: 'el-library',
-    storageBucket: 'el-library.appspot.com',
-    messagingSenderId: '499414996477',
-    appId: '1:499414996477:web:7f11f9b5e0a85d1725b594',
-    measurementId: 'G-KL38RV8JJP'
+    apiKey: "AIzaSyBQzrcO2XW59delXm53N0jnyFL6nLxZD-c",
+    authDomain: "e-library-56f7c.firebaseapp.com",
+    databaseURL: "https://e-library-56f7c.firebaseio.com",
+    projectId: "e-library-56f7c",
+    storageBucket: "e-library-56f7c.appspot.com",
+    messagingSenderId: "312837227315",
+    appId: "1:312837227315:web:e26fdb4e757d870033b446",
+    measurementId: "G-SE2EEMW8YD"
 }
 
 class FirebaseAgent {

@@ -31,8 +31,8 @@ const ProfilePage = () => {
                 </Grid>
                 <Grid item container xs={12} sm={7} justify="center" direction="column">
                     <ProfileForm email={user?.email || ''} userName={user?.userName || ''} onSubmit={updateUserNameAndEmail}/>
-                    <ProfileBookList collectionName={CollectionNames.markedAsRead} listName="Favorite books" bookItems={profileReadBooks}/>
-                    <ProfileBookList collectionName={CollectionNames.favorite} listName="Marked as read" bookItems={profileFavoriteBooks}/>
+                    <ProfileBookList collectionName={CollectionNames.favorite} listName="Favorite books" bookItems={profileFavoriteBooks}/>
+                    <ProfileBookList collectionName={CollectionNames.markedAsRead} listName="Marked as read" bookItems={profileReadBooks}/>
                 </Grid>
             </Grid>
         </div>
