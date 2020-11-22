@@ -1,26 +1,42 @@
 import React from 'react'
-import {Grid} from '@material-ui/core'
+import { Grid } from '@material-ui/core'
+import { observer } from 'mobx-react'
+import { useRootContext } from '../stores/RootStore'
 import PageHeader from '../components/utils/PageHeader'
 import PictureContainer from '../components/utils/PictureContainer'
+import AdminEditForm from '../components/forms/AdminEditForm'
+import UploadPdfButton from '../components/utils/UploadPdfButton'
 
 import '../styles/profilePage.css'
 import '../styles/bookPage.css'
-import AdminEditForm from '../components/forms/AdminEditForm'
-import UploadPdfButton from '../components/utils/UploadPdfButton'
-import {useRootContext} from '../stores/RootStore'
-import {observer} from 'mobx-react'
 
 const BookAddPage: React.FC = () => {
     const pdfRef = React.createRef<HTMLInputElement>()
-    const {tempImageUrl, uploadTempBookImage, createNewBook} = useRootContext().bookStore
+    const {
+        tempImageUrl,
+        uploadTempBookImage,
+        createNewBook
+    } = useRootContext().bookStore
 
     return (
         <>
             <PageHeader />
             <Grid className="book__grid-container" container>
-                <Grid container item md={4} justify="flex-start" sm={12} direction="column" alignItems="center">
-                    <PictureContainer imageUrl={tempImageUrl} imageTitle="Book cover" onUpload={uploadTempBookImage}/>
-                    <UploadPdfButton pdfRef={pdfRef}/>
+                <Grid
+                    container
+                    item
+                    md={4}
+                    justify="flex-start"
+                    sm={12}
+                    direction="column"
+                    alignItems="center"
+                >
+                    <PictureContainer
+                        imageUrl={tempImageUrl}
+                        imageTitle="Book cover"
+                        onUpload={uploadTempBookImage}
+                    />
+                    <UploadPdfButton pdfRef={pdfRef} />
                 </Grid>
                 <Grid
                     item
@@ -30,7 +46,12 @@ const BookAddPage: React.FC = () => {
                     justify="center"
                     alignItems="center"
                 >
-                    <AdminEditForm pdfRef={pdfRef} bookInfo={null} onSubmit={createNewBook} saveButtonText="save book"/>
+                    <AdminEditForm
+                        pdfRef={pdfRef}
+                        bookInfo={null}
+                        onSubmit={createNewBook}
+                        saveButtonText="save book"
+                    />
                 </Grid>
             </Grid>
         </>

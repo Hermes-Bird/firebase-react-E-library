@@ -5,14 +5,14 @@ import {useRootContext} from '../../stores/RootStore'
 
 const alreadyAddedStyle = {color: '#D632CE', cursor: 'default'}
 
-interface IBookActionButtonProps {
+interface IAddBookToCollectionButtonProps {
     collectionName: CollectionNames
     alreadyIn?: boolean
     icon: string,
     text: string
 }
 
-const BookActionButton: React.FC<IBookActionButtonProps> = ({alreadyIn, text, icon, collectionName}) => {
+const AddBookToCollectionButton: React.FC<IAddBookToCollectionButtonProps> = ({alreadyIn, text, icon, collectionName}) => {
     const [isAction, setIsAction] = useState(false)
     const {currentBook} = useRootContext().bookStore
     const {addBookToCollection} = useRootContext().userStore
@@ -53,4 +53,4 @@ const BookActionButton: React.FC<IBookActionButtonProps> = ({alreadyIn, text, ic
     )
 }
 
-export default BookActionButton
+export default AddBookToCollectionButton

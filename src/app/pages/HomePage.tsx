@@ -1,13 +1,14 @@
 import React, {useEffect} from 'react'
-import HomeHeader from '../components/home/Header'
-import SearchBar from '../components/home/SerchBar'
 import { Grid } from '@material-ui/core'
-import '../styles/homePage.css'
-import Book, { IBookProps } from '../components/home/Book'
-import ContentContainer from '../components/home/ContentContainer'
 import {useRootContext} from '../stores/RootStore'
 import {observer} from 'mobx-react'
 import {IBook} from '../models/Book'
+import HomeHeader from '../components/home/Header'
+import SearchBar from '../components/home/SerchBar'
+import Book from '../components/home/Book'
+import ContentContainer from '../components/home/ContentContainer'
+
+import '../styles/homePage.css'
 
 const renderBooks = (books: IBook[]) => {
     return books.map(({id, author, title, publicationYear, imageUrl, rating}) => (
@@ -31,7 +32,7 @@ const HomePage: React.FC = () => {
     useEffect(() => {
         fetchBooks()
         clearTemp()
-    }, [])
+    }, [clearTemp, fetchBooks])
 
     return (
         <main className="home__main">

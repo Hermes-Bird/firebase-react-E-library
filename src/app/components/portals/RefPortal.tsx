@@ -10,7 +10,7 @@ const RefPortal: React.FC<IRefPortalProps> = ({children, containerRef}) => {
 
     useEffect(() => {
         setContainer(containerRef.current)
-    }, [containerRef.current])
+    }, [containerRef])
 
     return (
         containerRef.current ?

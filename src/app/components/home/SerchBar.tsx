@@ -10,10 +10,7 @@ const SearchBar: React.FC = () => {
             <FormControl fullWidth>
                 <TextField
                     variant="outlined"
-                    onChange={(e) => {
-                        searchBooks(e.target.value)
-                        console.log(e.target.value)
-                    }}
+                    onChange={e => searchBooks(e.target.value)}
                     label="Type name of your book"
                     InputProps={{
                         startAdornment: (

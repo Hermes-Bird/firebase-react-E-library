@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react'
+import {RouteComponentProps} from 'react-router'
+import {observer} from 'mobx-react'
 import {Grid} from '@material-ui/core'
+import {useRootContext} from '../stores/RootStore'
 import {history} from '../../index'
+import {IBookFormValues} from '../validation/bookValidation'
 import PageHeader from '../components/utils/PageHeader'
 import PictureContainer from '../components/utils/PictureContainer'
-import {RouteComponentProps} from 'react-router'
 import AdminEditForm from '../components/forms/AdminEditForm'
 import UploadPdfButton from '../components/utils/UploadPdfButton'
-import {useRootContext} from '../stores/RootStore'
-import {observer} from 'mobx-react'
+
 import '../styles/bookPage.css'
 import '../styles/profilePage.css'
-import {IBookFormValues} from '../validation/bookValidation'
 
 interface IMatchProps {
     id: string
@@ -24,9 +25,9 @@ const BookEditPage: React.FC<RouteComponentProps<IMatchProps>> = ({match}) => {
     const [imageUrl, setImageUrl] = useState('')
 
 
-    const deleteBook = () => {
-        deleteBookById(match.params.id)
-            .finally(() => history.push('/'))
+    const deleteBook = async () => {
+        await deleteBookById(match.params.id)
+        history.push('/')
     }
 
     const updateBook: (val: IBookFormValues) => Promise<void> = async (values) => {
@@ -35,15 +36,12 @@ const BookEditPage: React.FC<RouteComponentProps<IMatchProps>> = ({match}) => {
 
     const onImageUpload = async (file: File) => {
         const tempUrl = await uploadTempBookImage(file)
-        console.log(tempUrl)
         setImageUrl(tempUrl)
     }
 
     useEffect(() => {
             fetchBookById(match.params.id)
-                .then(() => {
-                    setImageUrl(currentBook?.imageUrl || imageUrl)
-                })
+                .then(() => setImageUrl(currentBook?.imageUrl || imageUrl))
     }, [])
 
 

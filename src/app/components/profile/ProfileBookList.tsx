@@ -6,20 +6,27 @@ import {CollectionNames} from '../../models/User'
 import {useRootContext} from '../../stores/RootStore'
 import {observer} from 'mobx-react'
 
-
-const renderList = (bookItems: IBook[], collectionName: CollectionNames) => {
-    return bookItems.map((bookItem, index) => {
-        return (
-            <BookListItem key={bookItem.id} imageUrl={bookItem.imageUrl} title={bookItem.title} collectionName={collectionName} id={bookItem.id}/>
-        )
-    })
-}
-
 interface IBookListProps {
     listName: string
     bookItems: IBook[]
     collectionName: CollectionNames
 }
+
+
+const renderList = (bookItems: IBook[], collectionName: CollectionNames) => {
+    return bookItems.map((bookItem) => {
+        return (
+            <BookListItem 
+                key={bookItem.id} 
+                imageUrl={bookItem.imageUrl}
+                title={bookItem.title} 
+                collectionName={collectionName} 
+                id={bookItem.id}
+            />
+        )
+    })
+}
+
 
 const ProfileBookList: React.FC<IBookListProps> = ({ listName, collectionName, bookItems}) => {
     const {user} = useRootContext().userStore
