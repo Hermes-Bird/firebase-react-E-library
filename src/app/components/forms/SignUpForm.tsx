@@ -35,7 +35,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
             }}
             validate={(values) => authValidate(values)}
         >
-            {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+            {({ isSubmitting }) => (
                 <Form>
                     <FormControl fullWidth>
                         <ValidatedTextField

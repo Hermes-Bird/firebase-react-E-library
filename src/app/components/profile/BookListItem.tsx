@@ -19,6 +19,7 @@ const BookListItem: React.FC<IBookListItemProps> = ({imageUrl, title, collection
         removeBookFromCollection(id, collectionName)
             .finally(() => setIsDeleting(false))
     }
+    
     return (
         <Grid container item alignItems="center" xs={12} lg={6} className="profile__book-item">
             <Grid item container alignItems="center" xs={11} wrap="nowrap">
@@ -31,7 +32,7 @@ const BookListItem: React.FC<IBookListItemProps> = ({imageUrl, title, collection
                 {
                     isDeleting ? <CircularProgress/>
                         : (
-                            <IconButton color="secondary" onClick={handleClick} disabled={isDeleting}>
+                            <IconButton color="secondary" onClick={handleClick}>
                                 <Icon color="inherit">close</Icon>
                             </IconButton>
                         )

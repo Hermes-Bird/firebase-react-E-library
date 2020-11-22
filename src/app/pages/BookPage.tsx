@@ -24,7 +24,7 @@ const BookPage: React.FC<RouteComponentProps<MatchProps>> = ({match }) => {
             .catch((err) => {
                 history.push('/')
             })
-    }, [])
+    }, [fetchBookById, match])
 
     const editHandler = () => {history.push(`/admin/book/edit/${match.params.id}`)}
 

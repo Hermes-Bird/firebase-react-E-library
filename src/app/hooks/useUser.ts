@@ -4,7 +4,7 @@ import {useRootContext} from '../stores/RootStore'
 
 // very important hook
 // dangerous to change
-// changes can break Rating system
+// changes can break Rating system (prepare to pain)
 
 export const useUser = () => {
     const [user, setUser]: [any, any] = useState(undefined)

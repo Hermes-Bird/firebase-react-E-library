@@ -5,7 +5,7 @@ import HeartRating from '../utils/HeartReating'
 import {IBook, Rating} from '../../models/Book'
 import {observer} from 'mobx-react'
 import {useRootContext} from '../../stores/RootStore'
-import BookActionButton from './BookActionButton'
+import AddBookToCollectionButton from './AddBookToCollectionButton'
 import {useBookInFavoriteAndInRead} from '../../hooks/useBookInCollections'
 import {CollectionNames} from '../../models/User'
 
@@ -29,12 +29,12 @@ const BookActionSection: React.FC<{book: IBook | null}> = ({book}) => {
                 </Typography>
                 <HeartRating bookPage handleChange={setCurrentBookRating} rating={bookRating}/>
             </Grid>
-            <a href={book?.pdfUrl} rel="noreferrer" target="_blank">
+            <a href={book?.pdfUrl || ''} rel="noreferrer" target="_blank">
                 <Button className="book__read-button" color="primary" variant="contained">Read</Button>
             </a>
             <Grid className="book__menu" container item justify="center" alignContent="center">
-                <BookActionButton collectionName={CollectionNames.markedAsRead} icon="book" text="Mark as read" alreadyIn={inRead}/>
-                <BookActionButton collectionName={CollectionNames.favorite} icon="stars" text="Add to favorite" alreadyIn={inFavorite}/>
+                <AddBookToCollectionButton collectionName={CollectionNames.markedAsRead} icon="book" text="Mark as read" alreadyIn={inRead}/>
+                <AddBookToCollectionButton collectionName={CollectionNames.favorite} icon="stars" text="Add to favorite" alreadyIn={inFavorite}/>
             </Grid>
 
         </Grid>

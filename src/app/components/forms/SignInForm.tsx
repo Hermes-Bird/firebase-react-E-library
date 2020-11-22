@@ -25,7 +25,7 @@ const SignInForm: React.FC<IUserFormProps> = ({ onSubmit }) => {
                 setSubmitting(true)
                 onSubmit(data)
                     .then()
-                    .catch(err => {
+                    .catch(() => {
                         setFieldError('email', 'Incorrect email or password')
                         setErrors({email: 'Incorrect email or password'})
                     })
@@ -33,7 +33,7 @@ const SignInForm: React.FC<IUserFormProps> = ({ onSubmit }) => {
             }}
             validate={(values) => authValidate(values)}
         >
-            {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+            {({ isSubmitting }) => (
                 <Form>
                     <FormControl fullWidth>
                         <ValidatedTextField
