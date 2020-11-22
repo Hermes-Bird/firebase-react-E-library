@@ -108,4 +108,4 @@ const AdminEditForm: React.FC<IAdminEditFormProps> = ({bookInfo, pdfRef, onSubmi
     )
 }
 
-export default observer(AdminEditForm)
+export default observerminEditForm)
