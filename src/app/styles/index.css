@@ -16,4 +16,14 @@ a {
     color: white;
 }
 
+.modal__success-icon {
+    font-size: 10rem !important;
+    margin-bottom: 15px;
+}
 
+.modal__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}

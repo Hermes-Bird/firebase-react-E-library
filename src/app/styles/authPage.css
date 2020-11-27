@@ -3,7 +3,7 @@
 }
 
 .auth-page__image {
-    background: url("../../static/images/auth-page.jpeg");
+    background: url('../../static/images/auth-page.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

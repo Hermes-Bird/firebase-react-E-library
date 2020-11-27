@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {FormControl, Grid} from '@material-ui/core'
 import {Form, Formik} from 'formik'
 import AdornmentField from '../utils/AdornmentField'
@@ -8,7 +8,8 @@ import {bookValidate, IBookFormValues} from '../../validation/bookValidation'
 import {history} from '../../../index'
 import {useRootContext} from '../../stores/RootStore'
 import {usePdfRef} from '../../hooks/usePdfRef'
-import {observer} from 'mobx-react'
+import { observer } from 'mobx-react'
+import SuccessModal from '../modals/SuccessModal'
 
 interface IAdminEditFormProps {
     onSubmit: (bookValues: IBookFormValues) => Promise<void>
@@ -21,7 +22,7 @@ interface IAdminEditFormProps {
 const AdminEditForm: React.FC<IAdminEditFormProps> = ({bookInfo, pdfRef, onSubmit, saveButtonText}) => {
     const {uploadPdf} = useRootContext().bookStore
     const pdf = usePdfRef(pdfRef, uploadPdf)
-
+    const [showModal, setShowModal] = useState(false)
 
     const initialValues: IBookFormValues = {
         title: bookInfo?.title || '',
@@ -40,15 +41,16 @@ const AdminEditForm: React.FC<IAdminEditFormProps> = ({bookInfo, pdfRef, onSubmi
                 setFieldError,
             }) => {
                 setSubmitting(true)
-                onSubmit(data)
-                    .then(() => {
-                        console.log('success!!!')
-                        history.push('/')
-                    })
-                    .catch(() => {
-                        setErrors({title: 'Woops something going wrong'})
-                        setFieldError('title', 'Woops something going wrong')
-                    })
+                setShowModal(true)
+                // onSubmit(data)
+                //     .then(() => {
+                //         history.push('/')
+
+                //     })
+                //     .catch(() => {
+                //         setErrors({title: 'Woops something going wrong'})
+                //         setFieldError('title', 'Woops something going wrong')
+                //     })
             }}
             validate={bookValidate}
             enableReinitialize
@@ -92,6 +94,11 @@ const AdminEditForm: React.FC<IAdminEditFormProps> = ({bookInfo, pdfRef, onSubmi
                             handleSubmit={handleSubmit}
                             isSubmitting={isSubmitting}
                             changes={true}
+                        />
+                        <SuccessModal 
+                            open={showModal}
+                            title="Success"
+                            content="Book information successfully changed"
                         />
                     </Form>
                 )
