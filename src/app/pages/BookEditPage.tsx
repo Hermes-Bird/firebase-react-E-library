@@ -12,7 +12,6 @@ import UploadPdfButton from '../components/utils/UploadPdfButton'
 
 import '../styles/bookPage.css'
 import '../styles/profilePage.css'
-import Modal from '../components/modals/Modal'
 
 interface IMatchProps {
     id: string
