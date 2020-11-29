@@ -39,8 +39,6 @@ const ProfileForm = ({userName, email, onSubmit}: IProfileFormProps) => {
             enableReinitialize
         >
             {({   values,
-                  handleChange,
-                  handleBlur,
                   handleSubmit,
                   isSubmitting,
                   initialValues

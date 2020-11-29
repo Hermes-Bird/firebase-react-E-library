@@ -9,9 +9,9 @@ import UploadPdfButton from '../components/utils/UploadPdfButton'
 
 import '../styles/profilePage.css'
 import '../styles/bookPage.css'
+import { ModalTypes } from '../stores/ModalStore'
 
 const BookAddPage: React.FC = () => {
-    const pdfRef = React.createRef<HTMLInputElement>()
     const {
         tempImageUrl,
         uploadTempBookImage,
@@ -23,8 +23,8 @@ const BookAddPage: React.FC = () => {
             <PageHeader />
             <Grid className="book__grid-container" container>
                 <Grid
-                    container
                     item
+                    container
                     md={4}
                     justify="flex-start"
                     sm={12}
@@ -36,7 +36,7 @@ const BookAddPage: React.FC = () => {
                         imageTitle="Book cover"
                         onUpload={uploadTempBookImage}
                     />
-                    <UploadPdfButton pdfRef={pdfRef} />
+                    <UploadPdfButton />
                 </Grid>
                 <Grid
                     item
@@ -47,7 +47,7 @@ const BookAddPage: React.FC = () => {
                     alignItems="center"
                 >
                     <AdminEditForm
-                        pdfRef={pdfRef}
+                        modalType={ModalTypes.successAdd}
                         bookInfo={null}
                         onSubmit={createNewBook}
                         saveButtonText="save book"

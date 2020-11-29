@@ -14,24 +14,23 @@ import { observer } from 'mobx-react'
 const SuccessModal = () => {
     const {
         modalText,
-        isTwoButtons,
+        isWarningModal,
         icon,
         iconColor,
         openModal,
-        closeModal
+        closeModal,
     } = useRootContext().modalStore
 
     const onClose = () => {
         closeModal()
         history.push('/')
-    }
+    } 
 
     return (
         <div>
-            
             <Dialog
                 open={openModal}
-                onClose={onClose}
+                onClose={!isWarningModal ? onClose : closeModal}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 fullWidth
@@ -50,14 +49,16 @@ const SuccessModal = () => {
                 </DialogContent>
                 <DialogActions>
                     {
-                        isTwoButtons ? (
+                        isWarningModal ? (
                             <Button color="primary" onClick={closeModal}>
                                 Cancel
                             </Button>
                         ) : null
                     }
                     <Button color="primary" onClick={onClose}>
-                        Ok
+                        {
+                            isWarningModal ? 'Exit' : 'Ok'
+                        }
                     </Button>
                 </DialogActions>
             </Dialog>

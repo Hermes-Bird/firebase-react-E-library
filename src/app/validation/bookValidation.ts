@@ -1,21 +1,26 @@
 export interface IBookFormValues {
-    title: string,
-    author: string,
-    publicationYear: string,
-    description: string,
-    pdfFile: File | string,
+    title: string
+    author: string
+    publicationYear: string
+    description: string
+    pdfFile: File | string
 }
-
 
 export interface IBookErrorValues {
-    title?: string,
-    author?: string,
-    publicationYear?: string,
+    title?: string
+    author?: string
+    publicationYear?: string
     description?: string
-    pdfFile?: string,
+    pdfFile?: string
 }
 
-export const bookValidate = ({ title, author, publicationYear, description, pdfFile}: IBookFormValues): (IBookErrorValues | {}) => {
+export const bookValidate = ({
+    title,
+    author,
+    publicationYear,
+    description,
+    pdfFile
+}: IBookFormValues): IBookErrorValues | {} => {
     const errors: IBookErrorValues = {}
 
     if (!title) {
@@ -36,13 +41,13 @@ export const bookValidate = ({ title, author, publicationYear, description, pdfF
         errors.description = 'Description should be at least 20 characters'
     }
 
-    if(!publicationYear) {
+    if (!publicationYear) {
         errors.publicationYear = 'Publication year is required'
     } else if (!/^\d{4}$/.test(publicationYear)) {
         errors.publicationYear = 'Publication year must contain 4 digits'
     }
 
-    if(!pdfFile && !errors.title) {
+    if (!pdfFile && !errors.title) {
         errors.title = 'You must provide pdf file'
     }
 

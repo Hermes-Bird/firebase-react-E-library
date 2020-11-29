@@ -1,24 +1,39 @@
 import React from 'react'
 import { AppBar, Icon, Toolbar, Typography } from '@material-ui/core'
 import HeaderButton from './HeaderButton'
-import '../../styles/header.css'
 import { Link } from 'react-router-dom'
+import { useRootContext } from '../../stores/RootStore'
+import { history } from '../../..'
+import { ModalTypes } from '../../stores/ModalStore'
+import { observer } from 'mobx-react'
+import '../../styles/header.css'
 
 interface IHeaderProps {
     edit?: boolean
     editHandler?: () => void
+    exitHandler?: () => void
     buttonText?: string
-    icon?:string
+    icon?: string
 }
 
-const PageHeader: React.FC<IHeaderProps> = ({ edit, editHandler, buttonText='Edit', icon= 'edit'}) => {
+const PageHeader: React.FC<IHeaderProps> = ({
+    edit,
+    editHandler,
+    exitHandler,
+    buttonText = 'Edit',
+    icon = 'edit'
+}) => {
     const clickHandler = editHandler || (() => {})
+    const onExit = exitHandler || (() => history.push('/'))
     return (
         <AppBar position="static" color="primary">
             <Toolbar>
-                <Link to="/">
-                    <Icon className="header__icon">arrow_back_ios</Icon>
-                </Link>
+                <Icon
+                    className="header__icon"
+                    onClick={onExit}
+                >
+                    arrow_back_ios
+                </Icon>
                 <Typography
                     variant="h6"
                     color="inherit"
@@ -27,16 +42,14 @@ const PageHeader: React.FC<IHeaderProps> = ({ edit, editHandler, buttonText='Edi
                 >
                     <span className="highlight-header">E</span>-Library
                 </Typography>
-                {
-                    edit ? (
+                {edit ? (
                     <HeaderButton icon={icon} onClick={clickHandler}>
                         {buttonText}
                     </HeaderButton>
-                    ) : null
-                }
+                ) : null}
             </Toolbar>
         </AppBar>
     )
 }
 
-export default PageHeader
+export default observer(PageHeader)

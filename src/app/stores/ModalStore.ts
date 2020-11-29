@@ -1,4 +1,5 @@
 import { action, makeObservable, observable } from 'mobx'
+import { history } from '../..'
 
 export enum ModalTypes {
     successUpdate,
@@ -57,7 +58,8 @@ export class ModalStore {
     @observable openModal: boolean = false
     @observable iconColor: colors = colors.primary
     @observable icon: icons = icons.success
-    @observable isTwoButtons: boolean = false 
+    @observable isWarningModal: boolean = false 
+    @observable discardWarning: boolean = false    
 
     constructor() {
         makeObservable(this)
@@ -68,12 +70,23 @@ export class ModalStore {
         this.modalText = text
         this.iconColor = color
         this.icon = icon
-        this.isTwoButtons = modalType === ModalTypes.discardWarning ? true : false
+        this.isWarningModal = modalType === ModalTypes.discardWarning ? true : false
 
         this.openModal = true
     }
 
     @action closeModal = (): void => {
         this.openModal = false
+    }
+
+
+    @action setDiscardWarning = (discWarning: boolean) => {
+        this.discardWarning = discWarning
+    }
+
+    @action leaveEditPage = () => {
+        if (this.discardWarning) {
+            this.openModalWindow(ModalTypes.discardWarning)
+        } else history.push('/')
     }
 }

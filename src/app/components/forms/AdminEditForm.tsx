@@ -6,27 +6,26 @@ import SaveChangesButton from '../utils/SaveChangesButton'
 import { IBook } from '../../models/Book'
 import { bookValidate, IBookFormValues } from '../../validation/bookValidation'
 import { useRootContext } from '../../stores/RootStore'
-import { usePdfRef } from '../../hooks/usePdfRef'
 import { observer } from 'mobx-react'
-import SuccessModal from '../modals/SuccessModal'
+import SuccessModal from '../modals/ModalWindow'
 import { ModalTypes } from '../../stores/ModalStore'
+import { isEqualObjects } from '../../helpers/helper'
 
 interface IAdminEditFormProps {
     onSubmit: (bookValues: IBookFormValues) => Promise<void>
     bookInfo: IBook | null
-    pdfRef: React.RefObject<HTMLInputElement>
     saveButtonText?: string
+    modalType: ModalTypes
 }
 
 const AdminEditForm: React.FC<IAdminEditFormProps> = ({
     bookInfo,
-    pdfRef,
     onSubmit,
-    saveButtonText
+    saveButtonText,
+    modalType
 }) => {
-    const { uploadPdf } = useRootContext().bookStore
-    const pdf = usePdfRef(pdfRef, uploadPdf)
-    const { openModalWindow } = useRootContext().modalStore
+    const { tempPdfFile } = useRootContext().bookStore
+    const { openModalWindow, setDiscardWarning } = useRootContext().modalStore
 
     const initialValues: IBookFormValues = {
         title: bookInfo?.title || '',
@@ -39,29 +38,24 @@ const AdminEditForm: React.FC<IAdminEditFormProps> = ({
     return (
         <Formik
             initialValues={initialValues}
-            onSubmit={(
-                data: IBookFormValues,
-                { setSubmitting, setErrors, setFieldError }
-            ) => {
+            onSubmit={(data: IBookFormValues, { setSubmitting }) => {
                 setSubmitting(true)
                 onSubmit(data)
                     .then(() => {
-                        openModalWindow(ModalTypes.discardWarning)
+                        openModalWindow(modalType)
                     })
                     .catch(err => {
                         console.log(err)
                         openModalWindow(ModalTypes.error)
-                        setErrors({ title: 'Woops something going wrong' })
-                        setFieldError('title', 'Woops something going wrong')
                     })
             }}
             validate={bookValidate}
             enableReinitialize
         >
             {({ values, handleSubmit, isSubmitting, setFieldValue }) => {
-                if (pdf && !values.pdfFile) {
-                    setFieldValue('pdfFile', pdf)
-                }
+                if (tempPdfFile && values.pdfFile !== tempPdfFile) setFieldValue('pdfFile', tempPdfFile)
+                const changes = !isEqualObjects(values, initialValues)
+                setDiscardWarning(changes)
                 return (
                     <Form>
                         <Grid
@@ -108,7 +102,7 @@ const AdminEditForm: React.FC<IAdminEditFormProps> = ({
                             buttonText={saveButtonText}
                             handleSubmit={handleSubmit}
                             isSubmitting={isSubmitting}
-                            changes={true}
+                            changes={changes}
                         />
                         <SuccessModal />
                     </Form>

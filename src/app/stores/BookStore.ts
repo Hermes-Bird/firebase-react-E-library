@@ -54,7 +54,7 @@ export class BookStore {
     @action updateBookById = async (bookFormValues: IBookFormValues, id: string) => {
         if (this.currentBook) {
             const image = typeof this.tempImageFile === 'string' ? this.currentBook.imageUrl : this.tempImageFile
-            await firebaseAgent.updateBook(id, bookFormValues, image, this.tempPdfFile)
+            await firebaseAgent.updateBook(id, bookFormValues, image)
             this.clearTemp()
         }
     }

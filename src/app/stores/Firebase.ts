@@ -239,15 +239,17 @@ class FirebaseAgent {
         }
     }
 
-    async updateBook(id: string, bookFormValues: IBookFormValues, image: File | string, pdf: File | null) {
+    async updateBook(id: string, bookFormValues: IBookFormValues, image: File | string) {
+
         const bookRef = this.db
             .collection('books')
             .withConverter(bookConverter)
             .doc(id)
 
-        let pdfUrl = !pdf ? bookFormValues.pdfFile : ''
+        let pdf = bookFormValues.pdfFile
+        let pdfUrl = typeof pdf === 'string' ? pdf : '' 
 
-        if (!pdfUrl && pdf) {
+        if (typeof pdf !== 'string') {
             const pdfRef = await this
                             .pdfStorage
                             .child(`${id}.pdf`)
@@ -261,9 +263,12 @@ class FirebaseAgent {
             await imgRef.put(image as File)
             imageUrl = await imgRef.getDownloadURL()
         }
-
+        
         await bookRef.update({
-            ...bookFormValues,
+            title: bookFormValues.title,
+            description: bookFormValues.description,
+            publicationYear: bookFormValues.publicationYear,
+            author: bookFormValues.author,
             imageUrl,
             pdfUrl
         })
