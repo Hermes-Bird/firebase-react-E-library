@@ -3,7 +3,6 @@ import { RouteComponentProps } from 'react-router'
 import { observer } from 'mobx-react'
 import { Grid } from '@material-ui/core'
 import { useRootContext } from '../stores/RootStore'
-import { history } from '../../index'
 import { IBookFormValues } from '../validation/bookValidation'
 import PageHeader from '../components/utils/PageHeader'
 import PictureContainer from '../components/utils/PictureContainer'
@@ -26,16 +25,21 @@ const BookEditPage: React.FC<RouteComponentProps<IMatchProps>> = ({
         fetchBookById,
         deleteBookById,
         updateBookById,
-        uploadTempBookImage
+        uploadTempBookImage,
     } = useRootContext().bookStore
 
-    const {discardWarning, openModalWindow} = useRootContext().modalStore
+    const {discardWarning, openModalWindow, openDeleteAskModal} = useRootContext().modalStore
 
     const [imageUrl, setImageUrl] = useState('')
 
     const deleteBook = async () => {
-        await deleteBookById(match.params.id)
-        history.push('/')
+        try {
+            await deleteBookById(match.params.id)
+            openModalWindow(ModalTypes.deleteSuccess)
+        } catch (err) {
+            console.log(err)
+            openModalWindow(ModalTypes.error)
+        }
     }
 
     const updateBook: (
@@ -61,7 +65,7 @@ const BookEditPage: React.FC<RouteComponentProps<IMatchProps>> = ({
                 buttonText="delete"
                 icon="delete"
                 edit
-                editHandler={deleteBook}
+                editHandler={() => openDeleteAskModal(deleteBook)}
                 exitHandler={discardWarning ? () => {
                     openModalWindow(ModalTypes.discardWarning)
                 } : undefined}

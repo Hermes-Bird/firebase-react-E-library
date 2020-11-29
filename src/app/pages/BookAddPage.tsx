@@ -18,9 +18,20 @@ const BookAddPage: React.FC = () => {
         createNewBook
     } = useRootContext().bookStore
 
+    const {
+        discardWarning,
+        openModalWindow
+    } = useRootContext().modalStore
+
     return (
         <>
-            <PageHeader />
+            <PageHeader 
+                exitHandler={
+                    discardWarning ? () => {
+                        openModalWindow(ModalTypes.discardWarning)
+                    } : undefined
+                }
+            />
             <Grid className="book__grid-container" container>
                 <Grid
                     item

@@ -15,22 +15,34 @@ const SuccessModal = () => {
     const {
         modalText,
         isWarningModal,
+        isDeleteAskModal,
         icon,
         iconColor,
         openModal,
         closeModal,
+        modalCallback
     } = useRootContext().modalStore
 
     const onClose = () => {
         closeModal()
         history.push('/')
-    } 
+    }
+
+    console.log(useRootContext().modalStore)
+
+    let okButtonText = 'OK'
+    if (isWarningModal) okButtonText = 'exit'
+    else if (isDeleteAskModal) okButtonText = 'delete'
+
+    console.log(isDeleteAskModal)
 
     return (
         <div>
             <Dialog
                 open={openModal}
-                onClose={!isWarningModal ? onClose : closeModal}
+                onClose={
+                    !isWarningModal && !isDeleteAskModal ? onClose : closeModal
+                }
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 fullWidth
@@ -48,17 +60,13 @@ const SuccessModal = () => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    {
-                        isWarningModal ? (
-                            <Button color="primary" onClick={closeModal}>
-                                Cancel
-                            </Button>
-                        ) : null
-                    }
-                    <Button color="primary" onClick={onClose}>
-                        {
-                            isWarningModal ? 'Exit' : 'Ok'
-                        }
+                    {isWarningModal || isDeleteAskModal ? (
+                        <Button color="primary" onClick={closeModal}>
+                            Cancel
+                        </Button>
+                    ) : null}
+                    <Button color="primary" onClick={modalCallback || onClose}>
+                        {okButtonText}
                     </Button>
                 </DialogActions>
             </Dialog>

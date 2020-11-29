@@ -1,10 +1,7 @@
 import React from 'react'
 import { AppBar, Icon, Toolbar, Typography } from '@material-ui/core'
 import HeaderButton from './HeaderButton'
-import { Link } from 'react-router-dom'
-import { useRootContext } from '../../stores/RootStore'
 import { history } from '../../..'
-import { ModalTypes } from '../../stores/ModalStore'
 import { observer } from 'mobx-react'
 import '../../styles/header.css'
 
@@ -28,10 +25,7 @@ const PageHeader: React.FC<IHeaderProps> = ({
     return (
         <AppBar position="static" color="primary">
             <Toolbar>
-                <Icon
-                    className="header__icon"
-                    onClick={onExit}
-                >
+                <Icon className="header__icon" onClick={onExit}>
                     arrow_back_ios
                 </Icon>
                 <Typography

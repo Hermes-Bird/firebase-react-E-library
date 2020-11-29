@@ -4,6 +4,8 @@ import { history } from '../..'
 export enum ModalTypes {
     successUpdate,
     successAdd,
+    deleteAsk,
+    deleteSuccess,
     discardWarning,
     error
 }
@@ -17,7 +19,8 @@ enum colors {
 enum icons {
     success = 'check_circle_outline',
     warning = 'help_outline',
-    error = 'error_outline'
+    error = 'error_outline',
+    delete = 'delete_outline'
 }
 
 interface IModalWindowProps {
@@ -50,6 +53,16 @@ const modal: modalSets = {
         text: 'Something goes wrong, try it later...',
         icon: icons.error,
         color: colors.error
+    },
+    [ModalTypes.deleteAsk]: {
+        text: 'Are you sure you want to delete this book?',
+        icon: icons.delete,
+        color: colors.error
+    },
+    [ModalTypes.deleteSuccess]: {
+        text: 'Book deleted successfully!',
+        icon: icons.delete,
+        color: colors.primary
     }
 }
 
@@ -59,13 +72,17 @@ export class ModalStore {
     @observable iconColor: colors = colors.primary
     @observable icon: icons = icons.success
     @observable isWarningModal: boolean = false 
-    @observable discardWarning: boolean = false    
+    @observable isDeleteAskModal: boolean = false
+    @observable discardWarning: boolean = false
+    @observable modalCallback: (() => void) | null = null     
 
     constructor() {
         makeObservable(this)
     }
 
     @action openModalWindow = (modalType: ModalTypes): void => {
+        this.closeModal()
+
         const { text, color, icon } = modal[modalType]
         this.modalText = text
         this.iconColor = color
@@ -77,16 +94,24 @@ export class ModalStore {
 
     @action closeModal = (): void => {
         this.openModal = false
+        this.isDeleteAskModal = false
+        this.isWarningModal = false
+        this.modalCallback = null
     }
 
+    @action openDeleteAskModal = (callback: () => void) => {
+        this.modalCallback = callback
+        this.isDeleteAskModal = true
+        
+        const { text, color, icon } = modal[ModalTypes.deleteAsk]
+        this.modalText = text
+        this.iconColor = color
+        this.icon = icon
+
+        this.openModal = true
+    }
 
     @action setDiscardWarning = (discWarning: boolean) => {
         this.discardWarning = discWarning
-    }
-
-    @action leaveEditPage = () => {
-        if (this.discardWarning) {
-            this.openModalWindow(ModalTypes.discardWarning)
-        } else history.push('/')
     }
 }
