@@ -14,8 +14,7 @@ export class BookStore {
     @observable tempPdfFile: File | null
     @observable profileFavoriteBooks: IBook[]
     @observable profileReadBooks: IBook[]
-
-    private tempImageFile: File | string
+    @observable tempImageFile: File | string
 
 
     constructor() {

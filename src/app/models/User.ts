@@ -22,12 +22,14 @@ export interface ISignInValues {
 export interface ISignUpValues {
     email: string
     password: string,
-    userName: string
+    userName: string,
+    repeatedPassword: string
 }
 
 
 export interface IAuthFormValues extends ISignInValues {
     userName?: string
+    repeatedPassword?: string
 }
 
 export interface IProfileFormValues {

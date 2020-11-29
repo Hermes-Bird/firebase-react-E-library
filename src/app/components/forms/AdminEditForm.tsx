@@ -24,7 +24,7 @@ const AdminEditForm: React.FC<IAdminEditFormProps> = ({
     saveButtonText,
     modalType
 }) => {
-    const { tempPdfFile } = useRootContext().bookStore
+    const { tempPdfFile, tempImageFile } = useRootContext().bookStore
     const { openModalWindow, setDiscardWarning } = useRootContext().modalStore
 
     const initialValues: IBookFormValues = {
@@ -53,8 +53,15 @@ const AdminEditForm: React.FC<IAdminEditFormProps> = ({
             enableReinitialize
         >
             {({ values, handleSubmit, isSubmitting, setFieldValue }) => {
-                if (tempPdfFile && values.pdfFile !== tempPdfFile) setFieldValue('pdfFile', tempPdfFile)
-                const changes = !isEqualObjects(values, initialValues)
+                if (tempPdfFile && values.pdfFile !== tempPdfFile) {
+                    setFieldValue('pdfFile', tempPdfFile)
+                }
+                
+                // check equality of initial and current values || or changing of temp image file
+                const changes =
+                    !isEqualObjects(values, initialValues) ||
+                    typeof tempImageFile !== 'string'
+    
                 setDiscardWarning(changes)
                 return (
                     <Form>
