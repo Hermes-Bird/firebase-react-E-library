@@ -13,7 +13,8 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
     const initialValues = {
         email: '',
         password: '',
-        userName: ''
+        userName: '',
+        repeatedPassword: ''
     }
 
     return (
@@ -28,7 +29,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
                 onSubmit(data)
                     .then()
                     .catch(err => {
-                        setFieldError('email','Email is already used by another account')
+                        setFieldError('email', 'Email is already used by another account')
                         setErrors({email: 'Email is already used by another account'})
                     })
                     .finally(() => setSubmitting(false))
@@ -62,6 +63,16 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
                             label="Password"
                             type="password"
                             name="password"
+                            as={TextField}
+                        />
+                    </FormControl>
+
+                    <FormControl fullWidth>
+                        <ValidatedTextField
+                            variant="outlined"
+                            label="Repeate you're password"
+                            type="password"
+                            name="repeatedPassword"
                             as={TextField}
                         />
                     </FormControl>

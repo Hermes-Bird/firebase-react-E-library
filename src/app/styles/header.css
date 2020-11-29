@@ -10,6 +10,7 @@
 
 .header__icon {
     transition: all .2s ease-in;
+    cursor: pointer;
 }
 
 .header__icon:active, .header__icon:hover  {

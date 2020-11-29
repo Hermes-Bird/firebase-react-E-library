@@ -14,8 +14,7 @@ export class BookStore {
     @observable tempPdfFile: File | null
     @observable profileFavoriteBooks: IBook[]
     @observable profileReadBooks: IBook[]
-
-    private tempImageFile: File | string
+    @observable tempImageFile: File | string
 
 
     constructor() {
@@ -43,7 +42,6 @@ export class BookStore {
 
     @action createNewBook = async (bookFormValues: IBookFormValues) => {
         await firebaseAgent.createBook(bookFormValues, this.tempImageFile, this.tempPdfFile as File)
-        this.clearTemp()
     }
 
     @action fetchBooks = async () => {
@@ -54,8 +52,7 @@ export class BookStore {
     @action updateBookById = async (bookFormValues: IBookFormValues, id: string) => {
         if (this.currentBook) {
             const image = typeof this.tempImageFile === 'string' ? this.currentBook.imageUrl : this.tempImageFile
-            await firebaseAgent.updateBook(id, bookFormValues, image, this.tempPdfFile)
-            this.clearTemp()
+            await firebaseAgent.updateBook(id, bookFormValues, image)
         }
     }
 
